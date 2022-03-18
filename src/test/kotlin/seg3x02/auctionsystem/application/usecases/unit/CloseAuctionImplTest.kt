@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestPropertySource
-import seg3x02.auctionsystem.adapters.dtos.BidDto
+import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.EmailService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
@@ -27,7 +27,7 @@ import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.domain.user.core.creditCard.Address
 import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
 import java.math.BigDecimal
 import java.time.Duration
@@ -49,7 +49,7 @@ class CloseAuctionImplTest {
     @Autowired
     lateinit var auctionRepository: AuctionRepository
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
     @Autowired
     lateinit var creditCardRepository: CreditCardRepository
     @Autowired
@@ -62,7 +62,7 @@ class CloseAuctionImplTest {
     @Test
     fun closeAuction_seller_has_no_pending_payment_processed_right() {
         // create seller
-        val sellerId = UUID.randomUUID()
+        val sellerId = "sellerId"
         val seller = UserAccount(sellerId,
             "Toto",
             "Tata",
@@ -81,7 +81,7 @@ class CloseAuctionImplTest {
         )
         creditCardRepository.save(sellercc)
         seller.creditCardNumber = sellercc.number
-        userRepository.save(seller)
+        accountRepository.save(seller)
         // create auction
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
@@ -98,23 +98,23 @@ class CloseAuctionImplTest {
             "Very rare")
         auction.item = itemId
         // add bids to auction - ensure winner is selected
-        val buyer1Id = UUID.randomUUID()
+        val buyer1Id = "buyer1Id"
         val bid1 = auction.createBid(
-            BidDto(BigDecimal(125),
+            BidCreateDto(BigDecimal(125),
             LocalDateTime.now(),
             buyer1Id),
             bidFactory,
             bidRepository
         )
-        val buyer2Id = UUID.randomUUID()
+        val buyer2Id = "buyer2Id"
         val buyer2 = UserAccount(buyer2Id,
             "Roro",
             "Zaza",
             "roro@somewhere.com"
         )
-        userRepository.save(buyer2)
+        accountRepository.save(buyer2)
         val bid2 = auction.createBid(
-            BidDto(BigDecimal(150),
+            BidCreateDto(BigDecimal(150),
                 LocalDateTime.now(),
                 buyer2Id),
             bidFactory,
@@ -143,7 +143,7 @@ class CloseAuctionImplTest {
     @Test
     fun closeAuction_seller_has_no_pending_payment_processed_fail() {
         // create seller
-        val sellerId = UUID.randomUUID()
+        val sellerId = "sellerId"
         val seller = UserAccount(sellerId,
             "Toto",
             "Tata",
@@ -162,7 +162,7 @@ class CloseAuctionImplTest {
         )
         creditCardRepository.save(sellercc)
         seller.creditCardNumber = sellercc.number
-        userRepository.save(seller)
+        accountRepository.save(seller)
         // create auction
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
@@ -174,23 +174,23 @@ class CloseAuctionImplTest {
             AuctionCategory("Toy")
         )
         // add bids to auction - ensure winner is selected
-        val buyer1Id = UUID.randomUUID()
+        val buyer1Id = "buyer1Id"
         val bid1 = auction.createBid(
-            BidDto(BigDecimal(125),
+            BidCreateDto(BigDecimal(125),
                 LocalDateTime.now(),
                 buyer1Id),
             bidFactory,
             bidRepository
         )
-        val buyer2Id = UUID.randomUUID()
+        val buyer2Id = "buyer2Id"
         val buyer2 = UserAccount(buyer2Id,
             "Roro",
             "Zaza",
             "roro@somewhere.com"
         )
-        userRepository.save(buyer2)
+        accountRepository.save(buyer2)
         val bid2 = auction.createBid(
-            BidDto(BigDecimal(150),
+            BidCreateDto(BigDecimal(150),
                 LocalDateTime.now(),
                 buyer2Id),
             bidFactory,
@@ -224,7 +224,7 @@ class CloseAuctionImplTest {
     @Test
     fun closeAuction_no_bids() {
         // create seller
-        val sellerId = UUID.randomUUID()
+        val sellerId = "sellerId"
         val seller = UserAccount(sellerId,
             "Toto",
             "Tata",
@@ -243,7 +243,7 @@ class CloseAuctionImplTest {
         )
         creditCardRepository.save(sellercc)
         seller.creditCardNumber = sellercc.number
-        userRepository.save(seller)
+        accountRepository.save(seller)
         // create auction
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,

@@ -5,4 +5,4 @@ import java.util.*
 
 class UserAccountCreated(val id: UUID,
                          val occuredOn: Date,
-                         val userId: UUID): DomainEvent
+                         val userId: String): DomainEvent

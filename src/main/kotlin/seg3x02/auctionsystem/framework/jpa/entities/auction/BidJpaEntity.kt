@@ -12,5 +12,5 @@ import javax.persistence.Table
 data class BidJpaEntity(@Id val id: UUID,
                         val amount: BigDecimal,
                         val date: LocalDateTime,
-                        val buyer: UUID
+                        val buyer: String
     )

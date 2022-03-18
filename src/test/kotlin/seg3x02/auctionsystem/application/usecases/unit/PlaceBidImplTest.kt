@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestPropertySource
-import seg3x02.auctionsystem.adapters.dtos.BidDto
+import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.PlaceBid
 import seg3x02.auctionsystem.domain.auction.core.Auction
@@ -17,7 +17,7 @@ import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import seg3x02.auctionsystem.domain.item.core.Item
 import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
 import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
 import java.math.BigDecimal
@@ -34,7 +34,7 @@ class PlaceBidImplTest {
     @Autowired
     lateinit var auctionRepository: AuctionRepository
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
     @Autowired
     lateinit var bidRepository: BidRepository
     @Autowired
@@ -43,7 +43,7 @@ class PlaceBidImplTest {
     @Test
     fun placeBid_to_Auction_No_Pending_Payments() {
         // add user to user repository
-        val buyerId = UUID.randomUUID()
+        val buyerId = "buyerXXX"
         val buyer = UserAccount(buyerId,
             "Toto",
             "Tata",
@@ -51,7 +51,7 @@ class PlaceBidImplTest {
         )
         buyer.creditCardNumber = 555555555
         buyer.pendingPayment = null
-        userRepository.save(buyer)
+        accountRepository.save(buyer)
         // add auction to auction repository
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
@@ -59,7 +59,7 @@ class PlaceBidImplTest {
             Duration.ofDays(3),
             BigDecimal(100),
             BigDecimal(5),
-            UUID.randomUUID(),
+            "sellerXXX",
             AuctionCategory("Toy")
         )
         val itemId = UUID.randomUUID()
@@ -68,9 +68,9 @@ class PlaceBidImplTest {
             "Very rare")
         auction.item = itemId
         auctionRepository.save(auction)
-        val bidInfo = BidDto(BigDecimal(150.00), LocalDateTime.now(), buyerId)
+        val bidInfo = BidCreateDto(BigDecimal(150.00), LocalDateTime.now(), buyerId)
         val result = placeBid.placeBid(buyerId, auctionId, bidInfo)
-        Assertions.assertThat(result).isNotNull()
+        Assertions.assertThat(result).isNotNull
         val expBidEv = (eventEmitter as EventEmitterAdapterStub).retrieveNewBidCreatedEvent()
         val newBidId = expBidEv?.bidId
         Assertions.assertThat(newBidId).isNotNull
@@ -83,7 +83,7 @@ class PlaceBidImplTest {
     @Test
     fun placeBid_to_Auction_Pending_Payments() {
         // add user to user repository
-        val buyerId = UUID.randomUUID()
+        val buyerId = "buyerXXX"
         val buyer = UserAccount(buyerId,
             "Toto",
             "Tata",
@@ -93,7 +93,7 @@ class PlaceBidImplTest {
         buyer.pendingPayment = PendingPayment(
             BigDecimal(100)
         )
-        userRepository.save(buyer)
+        accountRepository.save(buyer)
         // add auction to auction repository
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
@@ -101,7 +101,7 @@ class PlaceBidImplTest {
             Duration.ofDays(3),
             BigDecimal(100),
             BigDecimal(5),
-            UUID.randomUUID(),
+            "sellerYYY",
             AuctionCategory("Toy")
         )
         val itemId = UUID.randomUUID()
@@ -110,7 +110,7 @@ class PlaceBidImplTest {
             "Very rare")
         auction.item = itemId
         auctionRepository.save(auction)
-        val bidInfo = BidDto(BigDecimal(150.00), LocalDateTime.now(), buyerId)
+        val bidInfo = BidCreateDto(BigDecimal(150.00), LocalDateTime.now(), buyerId)
         val result = placeBid.placeBid(buyerId, auctionId, bidInfo)
         Assertions.assertThat(result).isNull()
     }

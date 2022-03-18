@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.application.usecases.implementation
 
-import seg3x02.auctionsystem.adapters.dtos.AuctionDto
+import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
 import seg3x02.auctionsystem.application.services.AuctionScheduler
 import seg3x02.auctionsystem.application.usecases.CreateAuction
 import seg3x02.auctionsystem.domain.auction.facade.AuctionFacade
@@ -14,7 +14,7 @@ class CreateAuctionImpl(
     private var auctionFacade: AuctionFacade,
     private var auctionScheduler: AuctionScheduler): CreateAuction {
 
-    override fun addAuction(auctionInfo: AuctionDto): UUID? {
+    override fun addAuction(auctionInfo: AuctionCreateDto): UUID? {
         val ccInfo = auctionInfo.creditCardInfo
         if (ccInfo != null) {
             userFacade.addCreditCard(auctionInfo.seller, ccInfo)

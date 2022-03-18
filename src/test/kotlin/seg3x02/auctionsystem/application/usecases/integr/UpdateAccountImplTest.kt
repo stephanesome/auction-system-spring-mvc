@@ -1,14 +1,12 @@
 package seg3x02.auctionsystem.application.usecases.integr
 
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.every
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.AccountDto
-import seg3x02.auctionsystem.adapters.dtos.AddressDto
-import seg3x02.auctionsystem.adapters.dtos.CreditCardDto
+import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
+import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.UpdateAccount
@@ -17,12 +15,10 @@ import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.domain.user.core.creditCard.Address
 import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
-import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
 import java.time.Month
 import java.time.Year
-import java.util.*
 
 @SpringBootTest
 class UpdateAccountImplTest {
@@ -31,7 +27,7 @@ class UpdateAccountImplTest {
     @Autowired
     lateinit var creditService: CreditService
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
     @Autowired
     lateinit var creditCardRepository: CreditCardRepository
     @Autowired
@@ -40,7 +36,7 @@ class UpdateAccountImplTest {
     @Test
     fun updateAccount_pending_payment_credit_card() {
         // create account
-        val userId = UUID.randomUUID()
+        val userId = "userYYY"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
@@ -63,10 +59,10 @@ class UpdateAccountImplTest {
         )
         creditCardRepository.save(usercc)
         user.creditCardNumber = usercc.number
-        userRepository.save(user)
+        accountRepository.save(user)
 
         // create DTO for update
-        val addr = AddressDto(
+        val addr = AddressCreateDto(
             "125 DeLa Rue",
             "Ottawa",
             "Canada",
@@ -74,7 +70,7 @@ class UpdateAccountImplTest {
         val updatedCcNumber = 6666666
         val updatedCcexYear = Year.parse("2024")
         val updatedCcexMonth = Month.AUGUST
-        val cc = CreditCardDto(updatedCcNumber,
+        val cc = CreditCardCreateDto(updatedCcNumber,
             updatedCcexMonth,
             updatedCcexYear,
             "Toto",
@@ -82,7 +78,8 @@ class UpdateAccountImplTest {
             addr
         )
         val updatedEmail = "totonew@somewhere.com"
-        val userDto = AccountDto(
+        val userDto = AccountCreateDto(
+            "user000",
             "Toto",
             "Tata",
             updatedEmail)
@@ -90,7 +87,7 @@ class UpdateAccountImplTest {
 
         updateAccount.updateAccount(userId, userDto)
         // check events and updates
-        val updatedUser = userRepository.find(userId)
+        val updatedUser = accountRepository.find(userId)
         Assertions.assertThat(updatedUser).isNotNull
         Assertions.assertThat(updatedUser?.email).isEqualTo(updatedEmail)
         Assertions.assertThat(updatedUser?.pendingPayment).isNull()
@@ -100,7 +97,7 @@ class UpdateAccountImplTest {
     @Test
     fun updateAccount_no_pending_payment_credit_card() {
         // create account
-        val userId = UUID.randomUUID()
+        val userId = "userYYY"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
@@ -120,10 +117,10 @@ class UpdateAccountImplTest {
         )
         creditCardRepository.save(usercc)
         user.creditCardNumber = usercc.number
-        userRepository.save(user)
+        accountRepository.save(user)
 
         // create DTO for update
-        val addr = AddressDto(
+        val addr = AddressCreateDto(
             "125 DeLa Rue",
             "Ottawa",
             "Canada",
@@ -131,7 +128,7 @@ class UpdateAccountImplTest {
         val updatedCcNumber = 6666666
         val updatedCcexYear = Year.parse("2024")
         val updatedCcexMonth = Month.AUGUST
-        val cc = CreditCardDto(updatedCcNumber,
+        val cc = CreditCardCreateDto(updatedCcNumber,
             updatedCcexMonth,
             updatedCcexYear,
             "Toto",
@@ -139,7 +136,8 @@ class UpdateAccountImplTest {
             addr
         )
         val updatedEmail = "totonew@somewhere.com"
-        val userDto = AccountDto(
+        val userDto = AccountCreateDto(
+            "user000",
             "Toto",
             "Tata",
             updatedEmail)
@@ -147,7 +145,7 @@ class UpdateAccountImplTest {
 
         updateAccount.updateAccount(userId, userDto)
         // check events and updates
-        val updatedUser = userRepository.find(userId)
+        val updatedUser = accountRepository.find(userId)
         Assertions.assertThat(updatedUser).isNotNull
         Assertions.assertThat(updatedUser?.email).isEqualTo(updatedEmail)
         Assertions.assertThat(updatedUser?.pendingPayment).isNull()
@@ -157,7 +155,7 @@ class UpdateAccountImplTest {
     @Test
     fun updateAccount_pending_payment_no_credit_card() {
         // create account
-        val userId = UUID.randomUUID()
+        val userId = "userYYY"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
@@ -180,18 +178,19 @@ class UpdateAccountImplTest {
         )
         creditCardRepository.save(usercc)
         user.creditCardNumber = usercc.number
-        userRepository.save(user)
+        accountRepository.save(user)
 
         // create DTO for update
         val updatedEmail = "totonew@somewhere.com"
-        val userDto = AccountDto(
+        val userDto = AccountCreateDto(
+            "user000",
             "Toto",
             "Tata",
             updatedEmail)
 
         updateAccount.updateAccount(userId, userDto)
         // check events and updates
-        val updatedUser = userRepository.find(userId)
+        val updatedUser = accountRepository.find(userId)
         Assertions.assertThat(updatedUser).isNotNull
         Assertions.assertThat(updatedUser?.email).isEqualTo(updatedEmail)
         Assertions.assertThat(updatedUser?.pendingPayment).isNotNull

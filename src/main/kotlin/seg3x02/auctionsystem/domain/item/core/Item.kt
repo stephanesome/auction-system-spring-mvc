@@ -5,5 +5,5 @@ import java.util.*
 class Item(val id: UUID,
         val title: String,
         val description: String) {
-    var image: ByteArray? = null
+    var image: ByteArray = ByteArray(0)
 }

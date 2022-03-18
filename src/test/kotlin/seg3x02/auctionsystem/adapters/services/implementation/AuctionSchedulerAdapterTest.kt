@@ -5,18 +5,19 @@ import org.junit.jupiter.api.Test
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.BidDto
+import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.AuctionScheduler
 import seg3x02.auctionsystem.domain.auction.core.Auction
 import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
+import seg3x02.auctionsystem.domain.item.core.Item
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.domain.user.core.creditCard.Address
 import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
 import java.time.Duration
 import java.time.LocalDateTime
@@ -30,7 +31,7 @@ class AuctionSchedulerAdapterTest {
     lateinit var auctionScheduler: AuctionScheduler
 
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
 
     @Autowired
     lateinit var auctionRepository: AuctionRepository
@@ -46,7 +47,7 @@ class AuctionSchedulerAdapterTest {
 
     @Test
     fun scheduleClose() {
-        val sellerId = UUID.randomUUID()
+        val sellerId = "seller000"
         val seller = UserAccount(sellerId,
             "Toto",
             "Tata",
@@ -65,7 +66,7 @@ class AuctionSchedulerAdapterTest {
         )
         creditCardRepository.save(sellercc)
         seller.creditCardNumber = sellercc.number
-        userRepository.save(seller)
+        accountRepository.save(seller)
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
             LocalDateTime.now(),
@@ -75,24 +76,29 @@ class AuctionSchedulerAdapterTest {
             seller.id,
             AuctionCategory("Toy")
         )
+        val itemId = UUID.randomUUID()
+        val item = Item(itemId,
+            "Gameboy",
+            "All new")
+        auction.item = itemId
         // add bids to auction - ensure winner is selected
-        val buyer1Id = UUID.randomUUID()
+        val buyer1Id = "buyer0001"
         val bid1 = auction.createBid(
-            BidDto(BigDecimal(125),
+            BidCreateDto(BigDecimal(125),
                 LocalDateTime.now(),
                 buyer1Id),
             bidFactory,
             bidRepository
         )
-        val buyer2Id = UUID.randomUUID()
+        val buyer2Id = "buyer0002"
         val buyer2 = UserAccount(buyer2Id,
             "Roro",
             "Zaza",
             "roro@somewhere.com"
         )
-        userRepository.save(buyer2)
+        accountRepository.save(buyer2)
         val bid2 = auction.createBid(
-            BidDto(BigDecimal(150),
+            BidCreateDto(BigDecimal(150),
                 LocalDateTime.now(),
                 buyer2Id),
             bidFactory,

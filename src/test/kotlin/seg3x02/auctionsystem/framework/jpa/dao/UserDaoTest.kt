@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
-import seg3x02.auctionsystem.adapters.repositories.UserJpaAdapter
+import seg3x02.auctionsystem.adapters.repositories.AccountJpaAdapter
 import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.framework.jpa.entities.user.account.PendingPaymentJpaEntity
@@ -20,25 +19,25 @@ import java.util.*
 @DataJpaTest
 class UserDaoTest {
     @Autowired
-    lateinit var userJpaAdapter: UserJpaAdapter
+    lateinit var userJpaAdapter: AccountJpaAdapter
 
     @Autowired
     lateinit var entityManager: TestEntityManager
 
     @Autowired
-    lateinit var accountRepository: UserJpaRepository
+    lateinit var accountRepository: AccountJpaRepository
 
     @TestConfiguration
     internal class TestConfig {
         @Bean
-        fun userJpaAdapter(accountRepository: UserJpaRepository): UserJpaAdapter {
-            return UserJpaAdapter(accountRepository)
+        fun userJpaAdapter(accountRepository: AccountJpaRepository): AccountJpaAdapter {
+            return AccountJpaAdapter(accountRepository)
         }
     }
 
     @Test
     fun save_user_account() {
-        val userId = UUID.randomUUID()
+        val userId = "userYYY"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
@@ -64,7 +63,7 @@ class UserDaoTest {
     @Test
     fun find_user_account() {
         val creditCardNumber = 555555555
-        val userId = UUID.randomUUID()
+        val userId = "userYYY"
         val user = UserAccountJpaEntity(userId,
             "Toto",
             "Tata",

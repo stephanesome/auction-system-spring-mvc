@@ -7,4 +7,4 @@ import java.util.*
 class Bid(val id: UUID,
           val amount: BigDecimal,
           val date: LocalDateTime,
-          val buyer: UUID)
+          val buyer: String)

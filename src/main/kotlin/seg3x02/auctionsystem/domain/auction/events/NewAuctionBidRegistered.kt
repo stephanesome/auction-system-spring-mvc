@@ -6,5 +6,5 @@ import java.util.*
 class NewAuctionBidRegistered(val id: UUID,
                               val occuredOn: Date,
                               val bidId: UUID,
-                              val userId: UUID): DomainEvent {
+                              val userId: String): DomainEvent {
 }

@@ -15,7 +15,7 @@ data class AuctionJpaEntity(@Id val id: UUID,
                             val startPrice: BigDecimal,
                             val minIncrement: BigDecimal,
                             val item: UUID,
-                            val seller: UUID,
+                            val seller: String,
                             @Embedded
                             val category: AuctionCategoryJpaEntity
 ) {

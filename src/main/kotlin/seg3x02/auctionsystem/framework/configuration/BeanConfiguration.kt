@@ -1,9 +1,7 @@
 package seg3x02.auctionsystem.framework.configuration
 
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import seg3x02.auctionsystem.AuctionSystemApplication
 import seg3x02.auctionsystem.application.services.AuctionScheduler
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.EmailService
@@ -23,7 +21,7 @@ import seg3x02.auctionsystem.domain.user.facade.implementation.UserFacadeImpl
 import seg3x02.auctionsystem.domain.user.factories.AccountFactory
 import seg3x02.auctionsystem.domain.user.factories.CreditCardFactory
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 
 @Configuration
 // @ComponentScan(basePackageClasses = [AuctionSystemApplication::class])
@@ -70,14 +68,27 @@ class BeanConfiguration() {
     }
 
     @Bean
-    fun userFacade(userRepository: UserRepository,
+    fun browseAuctionsUseCase(auctionFacade: AuctionFacade,
+                              itemFacade: ItemFacade
+    ): BrowseAuctions {
+        return BrowseAuctionsImpl(auctionFacade, itemFacade)
+    }
+
+    @Bean
+    fun viewAccountUseCase(userFacade: UserFacade
+    ): ViewAccount {
+        return ViewAccountImpl(userFacade)
+    }
+
+    @Bean
+    fun userFacade(accountRepository: AccountRepository,
                    accountFactory: AccountFactory,
                    creditCardRepository: CreditCardRepository,
                    creditCardFactory: CreditCardFactory,
                    eventEmitter: DomainEventEmitter,
                    creditService: CreditService
     ): UserFacade {
-        return UserFacadeImpl(userRepository,
+        return UserFacadeImpl(accountRepository,
             accountFactory,
             creditCardRepository,
             creditCardFactory,

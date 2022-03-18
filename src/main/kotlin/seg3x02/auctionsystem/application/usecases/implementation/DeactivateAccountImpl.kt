@@ -10,7 +10,7 @@ class DeactivateAccountImpl(private val userFacade: UserFacade,
                             private val auctionFacade: AuctionFacade,
                             private val emailService: EmailService
 ): DeactivateAccount {
-    override fun deactivateAccount(accountId: UUID): Boolean {
+    override fun deactivateAccount(accountId: String): Boolean {
         val userAuctions = userFacade.getUserAuctions(accountId)
         return if (auctionFacade.includesAuctionsInProgress(userAuctions) ||
             userFacade.hasPendingPayment(accountId)) {

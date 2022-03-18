@@ -8,7 +8,7 @@ import java.math.BigDecimal
 import java.util.*
 
 class UserAccount(
-    val id: UUID,
+    val id: String,
     var firstname: String,
     var lastname: String,
     var email: String) {

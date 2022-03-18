@@ -12,7 +12,9 @@ import seg3x02.auctionsystem.adapters.repositories.converters.AuctionJpaConverte
 import seg3x02.auctionsystem.domain.auction.core.Auction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.framework.jpa.dao.AuctionJpaRepository
+import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionCategoryJpaEntity
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Component
 @Primary
@@ -32,5 +34,17 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
     override fun find(id: UUID): Auction? {
         val auctionJpa = auctionRepository.findByIdOrNull(id)
         return auctionJpa?.let { converter.convertToModel(it) }
+    }
+
+    // @Cacheable
+    @Transactional
+    override fun findByCategory(category: String): List<Auction> {
+        val aucEnts = auctionRepository.findByCategory(AuctionCategoryJpaEntity(category))
+        val listAuctions = ArrayList<Auction>()
+        for (aucEnt in aucEnts) {
+            val auc = converter.convertToModel(aucEnt)
+            listAuctions.add(auc)
+        }
+        return listAuctions
     }
 }

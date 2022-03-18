@@ -1,0 +1,121 @@
+body {
+    background-color: rgba(255,255,255,0.7);
+    background-image: url("../images/itemsbagr.jpg");
+    background-blend-mode: lighten;
+    font-size: 14px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;
+    margin: 10px 150px 100px 80px;
+}
+
+.header {
+    grid-area: header;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+}
+
+.menu {
+    grid-area: menu;
+    border-bottom-color: blue;
+    border-bottom-style: solid;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.content {
+    grid-area: content;
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+    'header header header header header'
+    'menu menu menu menu menu'
+    'content content content content content';
+    /* grid-gap: 20px; */
+    /* padding: 10px; */
+}
+
+.grid-container > div {
+    text-align: left;
+}
+
+.auction-grid-container {
+    display: grid;
+    grid-template-areas:
+    'item-image item-elements'
+    'item-description item-description'
+    'bid-area bid-area';
+    grid-gap: 20px;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.account-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-content-menu {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+}
+
+.account-content-info {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+#title {
+    background-color: rgb(255, 204, 153);
+    font-style: italic;
+    font-weight: bold;
+    font-size:xx-large;
+}
+
+#cartLink {
+    width:50px;
+    position: absolute;
+    right: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF;
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+#feedback > h2 {
+    color: blue;
+}
+
+#feedback > ul > li {
+    color: red;
+    font-weight: bold;
+}
+
+#checkoutTable > td,  #checkoutTable > tr {
+    padding: 50px;
+}

@@ -7,7 +7,7 @@ import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.fixtures.*
 
 @TestConfiguration
@@ -18,8 +18,8 @@ class TestBeanConfiguration {
     }
 
     @Bean
-    fun userRepository(): UserRepository {
-        return UserRepositoryStub()
+    fun userRepository(): AccountRepository {
+        return AccountRepositoryStub()
     }
 
     @Bean

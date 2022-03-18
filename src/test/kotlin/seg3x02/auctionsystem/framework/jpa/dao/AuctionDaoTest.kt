@@ -40,7 +40,7 @@ class AuctionDaoTest {
 
     @Test
     fun save_auction() {
-        val sellerId = UUID.randomUUID()
+        val sellerId = "seller000"
         val auctionId = UUID.randomUUID()
         val auction = Auction(auctionId,
             LocalDateTime.now(),
@@ -65,7 +65,7 @@ class AuctionDaoTest {
 
     @Test
     fun find_auction() {
-        val sellerId = UUID.randomUUID()
+        val sellerId = "seller001"
         val auctionId = UUID.randomUUID()
         val auction = AuctionJpaEntity(auctionId,
             LocalDateTime.now(),

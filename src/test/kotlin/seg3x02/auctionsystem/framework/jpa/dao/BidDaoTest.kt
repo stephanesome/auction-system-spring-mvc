@@ -37,7 +37,7 @@ class BidDaoTest {
     @Test
     fun save_bid() {
         val bidId = UUID.randomUUID()
-        val buyerId = UUID.randomUUID()
+        val buyerId = "buyerxxx"
         val bid = Bid(bidId,
             BigDecimal(200.45),
             LocalDateTime.now(),
@@ -54,7 +54,7 @@ class BidDaoTest {
     @Test
     fun find_bid() {
         val bidId = UUID.randomUUID()
-        val buyerId = UUID.randomUUID()
+        val buyerId = "buyerxxx"
         val bid = BidJpaEntity(bidId,
             BigDecimal(200.45),
             LocalDateTime.now(),

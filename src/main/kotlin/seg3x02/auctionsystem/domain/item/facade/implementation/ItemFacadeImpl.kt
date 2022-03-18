@@ -1,7 +1,8 @@
 package seg3x02.auctionsystem.domain.item.facade.implementation
 
-import seg3x02.auctionsystem.adapters.dtos.ItemDto
+import seg3x02.auctionsystem.adapters.dtos.queries.ItemCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
+import seg3x02.auctionsystem.domain.item.core.Item
 import seg3x02.auctionsystem.domain.item.events.NewItemAdded
 import seg3x02.auctionsystem.domain.item.facade.ItemFacade
 import seg3x02.auctionsystem.domain.item.factories.ItemFactory
@@ -13,10 +14,14 @@ class ItemFacadeImpl(
     private var itemRepository: ItemRepository,
     private var eventEmitter: DomainEventEmitter): ItemFacade {
 
-    override fun addItem(itemInfo: ItemDto): UUID {
+    override fun addItem(itemInfo: ItemCreateDto): UUID {
         val item = itemFactory.createItem(itemInfo)
         itemRepository.save(item)
         eventEmitter.emit(NewItemAdded(UUID.randomUUID(), Date(), item.id))
         return item.id
+    }
+
+    override fun getItem(itemId: UUID): Item? {
+        return itemRepository.find(itemId)
     }
 }

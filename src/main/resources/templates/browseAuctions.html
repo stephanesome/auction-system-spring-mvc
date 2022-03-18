@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="S. Some">
+    <link href="../static/css/style.css" rel="stylesheet"
+          th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="grid-container">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+    <div class="content">
+        <form th:action="@{/auction}" method="get">
+        <table>
+            <tbody>
+            <tr th:each="auction : ${auctions}">
+                <td th:id="image-__${auction.id}__" >
+                    <div><img src="../../images/laptop" width="100pt" alt="Item Image"
+                              th:src="@{'/item/image/' + ${auction.id}}" /></div>
+                </td>
+                <td th:id="title-__${auction.id}__" th:text="${auction.itemTitle}">Title</td>
+                <td th:id="min-__${auction.id}__" th:text="${#numbers.formatCurrency(auction.currentMinBid)}">0</td>
+                <td th:id="end-__${auction.id}__" th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}">Long Description</td>
+                <td>
+                    <button th:id="select-__${auction.id}__" class="orderbt"
+                            type="submit" name="selectedAuction"
+                            th:value="${auctionStat.index}" th:text="#{select-auction}">Select</button>
+                </td>
+            </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

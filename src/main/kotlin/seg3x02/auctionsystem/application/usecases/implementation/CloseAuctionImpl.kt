@@ -12,10 +12,9 @@ class CloseAuctionImpl(
     private var userFacade: UserFacade,
     private var auctionFacade: AuctionFacade,
     private var creditService: CreditService,
-    private var emailService: EmailService
-): CloseAuction {
+    private var emailService: EmailService): CloseAuction {
 
-    override fun closeAuction(auctionId: UUID): UUID? {
+    override fun closeAuction(auctionId: UUID): String? {
         val winnerId = auctionFacade.closeAuction(auctionId)
         if (winnerId != null) {
             val amt = determineAuctionFee(auctionId)

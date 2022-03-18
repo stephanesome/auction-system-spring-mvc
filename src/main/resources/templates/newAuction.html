@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="S. Some">
+    <link href="../static/css/style.css" rel="stylesheet"
+          th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="grid-container">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+    <div class="content">
+        <div class="container">
+            <div th:switch="${createAuctionStatus}">
+                <p th:case="ok">
+                    <span th:text="#{auction-create-ok-message}">Bid too loo</span>
+                </p>
+                <p th:case="error">
+                    <span th:text="#{auction-create-error-message}">Error</span>
+                </p>
+            </div>
+            <div>
+                <form id="account-form" action="#" th:object="${auctionData}"
+                      th:action="@{/auth/createAuction}"
+                      enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <label for="category" th:text="#{auction.category}"><b>Category</b></label>
+                        <input id="category" type="text" placeholder="Enter Category of Auction" name="category" th:field="*{category}"/>
+                        <label for="auctitle" th:text="#{auction.item.title}"><b></b></label>
+                        <input id="auctitle" type="text" placeholder="Enter Title of Auctioned Item" name="auctitle" th:field="*{itemTitle}"/>
+                        <label for="description" th:text="#{auction.item.description}"><b></b></label>
+                        <textarea id="description" rows="4" cols="40" placeholder="Enter description" name="description" th:field="*{itemDescription}"></textarea>
+                        <label for="start" th:text="#{auction.startTime}"><b></b></label>
+                        <input id="start" type="datetime-local" placeholder="Enter starting time date" name="start" th:field="*{startTime}"/>
+                        <label for="duration" th:text="#{auction.duration}"><b></b></label>
+                        <input id="duration" type="number" placeholder="Auction duration (Days)" name="duration" th:field="*{duration}"/>
+                        <label for="price" th:text="#{auction.start-price}"><b></b></label>
+                        <input id="price" type="text" placeholder="Start price" name="price" th:field="*{startPrice}"/>
+                        <label for="priceIncr" th:text="#{auction.price-incr}"><b></b></label>
+                        <input id="priceIncr" type="text" placeholder="Price increment" name="priceIncr" th:field="*{minIncrement}"/>
+                        <label for="imageF" th:text="#{auction.item.image}"><b></b></label>
+                        <input id="imageF" type="file" placeholder="Image file" name="imageF" th:field="*{itemImageFile}"/>
+                    </div>
+                    <div class="row">
+                        <label for="ccnumb" th:text="#{account.ccard.number}"><b>Card Number</b></label>
+                        <input id="ccnumb" type="text" placeholder="Enter Username" name="ccnumb" th:field="*{number}"/>
+                        <label for="ccexpm" th:text="#{account.ccard.expmonth}"><b>Expiry Month</b></label>
+                        <input id="ccexpm" type="text" placeholder="Expiry Month" name="ccexpm" th:field="*{expirationMonth}"/>
+                        <label for="ccexpy" th:text="#{account.ccard.expyear}"><b>Expiry Year</b></label>
+                        <input id="ccexpy" type="text" placeholder="Expiry Year" name="ccexpy" th:field="*{expirationYear}"/>
+                    </div>
+                    <div class="row">
+                        <label for="ccfname" th:text="#{account.ccard.firstname}"><b>Holder Firstname</b></label>
+                        <input id="ccfname" type="text" placeholder="Holder's Firstname" name="ccfname" th:field="*{accountFirstname}"/>
+                        <label for="cclname" th:text="#{account.ccard.lastname}"><b>Holder Lastname</b></label>
+                        <input id="cclname" type="text" placeholder="Holder's Lastname" name="cclname" th:field="*{accountLastname}"/>
+                    </div>
+                    <div class="row">
+                        <label for="ccstreet" th:text="#{account.ccard.address.street}"><b>Street</b></label>
+                        <input id="ccstreet" type="text" placeholder="Street" name="ccstreet" th:field="*{street}"/>
+                        <label for="cccity" th:text="#{account.ccard.address.city}"><b>City</b></label>
+                        <input id="cccity" type="text" placeholder="City" name="cccity" th:field="*{city}"/>
+                        <label for="cccountry" th:text="#{account.ccard.address.country}"><b>Country</b></label>
+                        <input id="cccountry" type="text" placeholder="Country" name="cccountry" th:field="*{country}"/>
+                        <label for="ccpcode" th:text="#{account.ccard.address.postalcode}"><b>Postal Code</b></label>
+                        <input id="ccpcode" type="text" placeholder="Postal Code" name="ccpcode" th:field="*{postalCode}"/>
+                    </div>
+                    <div class="row">
+                        <button type="submit" name="addAuction"
+                                th:text="#{auction.create}">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

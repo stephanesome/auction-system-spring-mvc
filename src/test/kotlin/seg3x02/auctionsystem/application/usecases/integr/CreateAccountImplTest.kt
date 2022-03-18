@@ -4,11 +4,11 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.AccountDto
-import seg3x02.auctionsystem.adapters.dtos.AddressDto
-import seg3x02.auctionsystem.adapters.dtos.CreditCardDto
+import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
+import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.application.usecases.CreateAccount
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.time.Month
 import java.time.Year
 
@@ -18,7 +18,7 @@ class CreateAccountImplTest {
     lateinit var createAccount: CreateAccount
 
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
 
 /*
     @Autowired
@@ -33,13 +33,13 @@ class CreateAccountImplTest {
     @Test
     fun createAccount_with_credit_card_information_provided() {
         // setup accountInfo
-        val addr = AddressDto(
+        val addr = AddressCreateDto(
             "125 DeLa Rue",
             "Ottawa",
             "Canada",
             "K0K0K0"
         )
-        val cc = CreditCardDto(
+        val cc = CreditCardCreateDto(
             5555555,
             Month.JUNE,
             Year.parse("2024"),
@@ -47,14 +47,16 @@ class CreateAccountImplTest {
             "Tata",
             addr
         )
-        val userDto = AccountDto(
+        val userId = "user00"
+        val userDto = AccountCreateDto(
+            userId,
             "Toto",
             "Tata",
             "toto@somewhere.com"
         )
         userDto.creditCardInfo = cc
-        val userId = createAccount.createAccount(userDto)
-        Assertions.assertThat(userId).isNotNull
+        val userCreated = createAccount.createAccount(userDto)
+        Assertions.assertThat(userCreated).isTrue
         // get emitted events (creditCardCreated, userAccountCreated, creditCardSet)
 /*        val accCreationEvent = (eventEmitter as EventEmitterAdapterStub).retrieveUserAccountCreatedEvent()
         Assertions.assertThat(accCreationEvent).isNotNull
@@ -63,7 +65,7 @@ class CreateAccountImplTest {
         val ccSetEvent = (eventEmitter as EventEmitterAdapterStub).retrieveUserCreditCardSetEvent()
         Assertions.assertThat(ccSetEvent).isNotNull*/
         // check created objets
-        val newAccount = userId?.let { userRepository.find(it) }
+        val newAccount = accountRepository.find(userId)
         Assertions.assertThat(newAccount).isNotNull
         Assertions.assertThat(newAccount?.firstname).isEqualTo("Toto")
         Assertions.assertThat(newAccount?.creditCardNumber).isNotNull

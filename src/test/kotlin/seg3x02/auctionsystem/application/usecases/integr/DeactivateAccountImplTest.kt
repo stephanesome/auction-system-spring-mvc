@@ -1,10 +1,5 @@
 package seg3x02.auctionsystem.application.usecases.integr
 
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,8 +13,7 @@ import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.item.core.Item
 import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.repositories.UserRepository
-import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
+import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
 import java.time.Duration
 import java.time.LocalDateTime
@@ -32,7 +26,7 @@ internal class DeactivateAccountImplTest {
     @Autowired
     lateinit var emailService: EmailService
     @Autowired
-    lateinit var userRepository: UserRepository
+    lateinit var accountRepository: AccountRepository
     @Autowired
     lateinit var auctionRepository: AuctionRepository
     @Autowired
@@ -40,25 +34,25 @@ internal class DeactivateAccountImplTest {
 
     @Test
     fun deactivateAccount_no_pending_payment_no_auctions() {
-        val userId = UUID.randomUUID()
+        val userId = "sellerXXX"
         val userEmail = "toto@somewhere.com"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
             userEmail
         )
-        userRepository.save(user)
-        val origUser = userRepository.find(userId)
+        accountRepository.save(user)
+        val origUser = accountRepository.find(userId)
         Assertions.assertThat(origUser?.active).isTrue
 
         deactivateAccount.deactivateAccount(userId)
-        val deacUser = userRepository.find(userId)
+        val deacUser = accountRepository.find(userId)
         Assertions.assertThat(deacUser?.active).isFalse
     }
 
     @Test
     fun deactivateAccount_pending_payment_no_auctions() {
-        val userId = UUID.randomUUID()
+        val userId = "sellerXXX"
         val user = UserAccount(userId,
             "Toto",
             "Tata",
@@ -67,19 +61,19 @@ internal class DeactivateAccountImplTest {
         user.pendingPayment = PendingPayment(
             BigDecimal(120)
         )
-        userRepository.save(user)
-        val origUser = userRepository.find(userId)
+        accountRepository.save(user)
+        val origUser = accountRepository.find(userId)
         Assertions.assertThat(origUser?.active).isTrue
 
         deactivateAccount.deactivateAccount(userId)
-        val deacUser = userRepository.find(userId)
+        val deacUser = accountRepository.find(userId)
         Assertions.assertThat(deacUser?.active).isTrue
     }
 
     @Test
     fun deactivateAccount_no_pending_payment_closed_auction() {
         // create user account
-        val userId = UUID.randomUUID()
+        val userId = "sellerXXX"
         val userEmail = "toto@somewhere.com"
         val user = UserAccount(userId,
             "Toto",
@@ -106,18 +100,18 @@ internal class DeactivateAccountImplTest {
         auction1.isclosed = true
         user.auctions.add(auction1Id)
         auctionRepository.save(auction1)
-        userRepository.save(user)
+        accountRepository.save(user)
 
         Assertions.assertThat(user?.active).isTrue
         deactivateAccount.deactivateAccount(userId)
-        val deacUser = userRepository.find(userId)
+        val deacUser = accountRepository.find(userId)
         Assertions.assertThat(deacUser?.active).isFalse
     }
 
     @Test
     fun deactivateAccount_no_pending_payment_active_auction() {
         // create user account
-        val userId = UUID.randomUUID()
+        val userId = "sellerXXX"
         val userEmail = "toto@somewhere.com"
         val user = UserAccount(userId,
             "Toto",
@@ -144,18 +138,18 @@ internal class DeactivateAccountImplTest {
         auction1.isclosed = false
         user.auctions.add(auction1Id)
         auctionRepository.save(auction1)
-        userRepository.save(user)
+        accountRepository.save(user)
 
         Assertions.assertThat(user?.active).isTrue
         deactivateAccount.deactivateAccount(userId)
-        val deacUser = userRepository.find(userId)
+        val deacUser = accountRepository.find(userId)
         Assertions.assertThat(deacUser?.active).isTrue
     }
 
     @Test
     fun deactivateAccount_no_pending_payment_active_and_closed_auction() {
         // create user account
-        val userId = UUID.randomUUID()
+        val userId = "sellerXXX"
         val userEmail = "toto@somewhere.com"
         val user = UserAccount(userId,
             "Toto",
@@ -219,11 +213,11 @@ internal class DeactivateAccountImplTest {
         user.auctions.add(auction3Id)
         auctionRepository.save(auction3)
 
-        userRepository.save(user)
+        accountRepository.save(user)
 
         Assertions.assertThat(user?.active).isTrue
         deactivateAccount.deactivateAccount(userId)
-        val deacUser = userRepository.find(userId)
+        val deacUser = accountRepository.find(userId)
         Assertions.assertThat(deacUser?.active).isTrue
     }
 }

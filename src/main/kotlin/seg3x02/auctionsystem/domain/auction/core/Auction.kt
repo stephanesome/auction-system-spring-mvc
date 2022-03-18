@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.domain.auction.core
 
-import seg3x02.auctionsystem.adapters.dtos.BidDto
+import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import java.math.BigDecimal
@@ -13,13 +13,13 @@ class Auction(val id: UUID,
               val duration: Duration,
               val startPrice: BigDecimal,
               val minIncrement: BigDecimal,
-              val seller: UUID,
+              val seller: String,
               val category: AuctionCategory) {
     lateinit var item: UUID
     var isclosed: Boolean = false
     val bids: MutableList<UUID> = ArrayList()
 
-    fun createBid(bidInfo: BidDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID? {
+    fun createBid(bidInfo: BidCreateDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID? {
         return if (bids.isNotEmpty()) {
             val lastBidId = bids.last()
             val lastBid = bidRepository.find(lastBidId)
@@ -37,7 +37,7 @@ class Auction(val id: UUID,
         }
     }
 
-    private fun newBid(bidInfo: BidDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID {
+    private fun newBid(bidInfo: BidCreateDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID {
         val newBid = bidFactory.createBid(bidInfo)
         bids.add(newBid.id)
         bidRepository.save(newBid)
@@ -46,14 +46,18 @@ class Auction(val id: UUID,
 
     fun close(): UUID? {
         isclosed = true
-        return bids.lastOrNull()
+        return getLastBid()
     }
 
-    fun getBidSeller(bidId: UUID, bidRepository: BidRepository): UUID? {
+    fun getBidSeller(bidId: UUID, bidRepository: BidRepository): String? {
         return bidRepository.find(bidId)?.buyer
     }
 
     fun closeTime(): LocalDateTime {
         return startTime.plus(duration)
+    }
+
+    fun getLastBid(): UUID? {
+        return bids.lastOrNull()
     }
 }

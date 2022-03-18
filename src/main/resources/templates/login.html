@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="S. Some">
+    <link href="../static/css/style.css" rel="stylesheet"
+          th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="grid-container">
+    <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+    <div class="content">
+        <div th:if="${param.error}" th:text="#{loginPage.invalid}">
+            Invalid username and password.
+        </div>
+        <form th:action="@{/login}" method="post">
+            <table>
+                <tbody>
+                <tr>
+                    <td th:text="#{loginPage.username}">User Name :</td>
+                    <td><input id="loginId" type="text"  name="username"/></td>
+                </tr>
+                <tr>
+                    <td th:text="#{loginPage.password}">Password :</td>
+                    <td><input id="loginPasswd" type="password"  name="password"/></td>
+                </tr>
+                <tr>
+                    <td><input id="loginBtn" type="submit" th:value="#{loginPage.signin}"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>
