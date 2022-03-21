@@ -5,6 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.ModelAndView
 import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
 import seg3x02.auctionsystem.adapters.dtos.responses.AccountViewDto
 import seg3x02.auctionsystem.adapters.dtos.responses.AuctionBrowseDto
@@ -128,12 +129,9 @@ class WebController(private val auctionService: AuctionService) {
     fun updateAccount(principal: Principal, model: Model, session: HttpSession): String {
         val searchData = session.getAttribute("searchData") ?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
-        var account = session.getAttribute("currentUser") as AccountViewDto
-        val accountData = if (account != null) {
-            auctionService.setAccountForm(account)
-        } else {
-            AccountForm()
-        }
+        val account = session.getAttribute("currentUser") as AccountViewDto
+        val accountData = auctionService.setAccountForm(account)
+        // session.setAttribute("accountData", accountData)
         model.addAttribute("accountData", accountData)
         return "updateAccount"
     }
@@ -145,6 +143,8 @@ class WebController(private val auctionService: AuctionService) {
         // call service to update - pass account and accountData
         var account = session.getAttribute("currentUser") as AccountViewDto
         auctionService.updateAccount(account, accountData)
+        // val accountData = session.getAttribute("accountData")?: AccountForm()
+        model.addAttribute("accountData", accountData)
         return "updateAccount"
     }
 
@@ -162,11 +162,6 @@ class WebController(private val auctionService: AuctionService) {
             session.setAttribute("currentUser", account)
         }
         model.addAttribute("account", account)
-    }
-
-    @GetMapping(value = ["/auth/deactivateAccount"])
-    fun deactivateAccount() {
-
     }
 
     @GetMapping(value = ["/auth/newAuction"])
@@ -214,6 +209,14 @@ class WebController(private val auctionService: AuctionService) {
         val account = session.getAttribute("currentUser") as AccountViewDto
         setupImage(response, account.auctions, id)
     }
+
+    @GetMapping(value = ["/auth/deactivateAccount"])
+    fun deactivateAccount(model: Model, session: HttpSession): ModelAndView {
+        val account = session.getAttribute("currentUser") as AccountViewDto
+        auctionService.deactivate(account.userName)
+        return ModelAndView("redirect:/logout")
+    }
+
     private fun setupImage(
         response: HttpServletResponse,
         auctions: List<AuctionBrowseDto>,
@@ -226,4 +229,6 @@ class WebController(private val auctionService: AuctionService) {
         val str: InputStream = ByteArrayInputStream(auction?.itemImage)
         IOUtils.copy(str, response.outputStream)
     }
+
+
 }

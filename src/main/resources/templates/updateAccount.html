@@ -29,6 +29,7 @@
                                                 th:value="*{userName}"/>
                                                 <label for="passwd" th:text="#{account.password}"><b></b></label>
                                                 <input id="passwd" type="password" placeholder="Enter Password" name="passwd" th:field="*{password}"/>-->
+                        <input id="uname" type="hidden" name="uname" th:field="*{userName}"/>
                         <label for="fname" th:text="#{account.firstname}"><b></b></label>
                         <input id="fname" type="text" th:field="*{firstname}" name="fname" />
                         <label for="lname" th:text="#{account.lastname}"><b></b></label>

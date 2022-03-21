@@ -25,6 +25,7 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
                      private val createAccount: CreateAccount,
                      private val createAuction: CreateAuction,
                      private val updateAccount: UpdateAccount,
+                     private val deactivateAccount: DeactivateAccount,
                      private val userRepository: UserJpaRepository,
                      private val encoder: PasswordEncoder) {
 
@@ -39,7 +40,7 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
         return if (userRepository.existsByUsername(accountData.userName!!))  {
             false
         } else {
-            val user = User(accountData.userName!!, encoder.encode(accountData.password))
+            val user = User(accountData.userName!!, encoder.encode(accountData.password), true)
             userRepository.save(user!!)
             // invoke create Account use
             val account = accountConverter.convertFormAccount(accountData)
@@ -105,6 +106,16 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
             accountDto.creditCardInfo = cCard
         }
         return updateAccount.updateAccount(account.userName, accountDto)
+    }
+
+    fun deactivate(userName: String): Boolean {
+        val optUser = userRepository.findByUsername(userName)
+        if (optUser.isPresent) {
+            val user = optUser.get()
+            user.enabled = false
+            userRepository.save(user)
+        }
+        return deactivateAccount.deactivateAccount(userName)
     }
 
     private fun accountDataChange(account: AccountViewDto, accountData: AccountForm): Boolean {

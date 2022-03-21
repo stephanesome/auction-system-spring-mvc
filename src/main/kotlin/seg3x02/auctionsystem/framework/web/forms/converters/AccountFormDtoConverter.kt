@@ -26,23 +26,23 @@ abstract class AccountFormDtoConverter {
     )
     abstract fun convertDtoAccountView(account: AccountViewDto): AccountForm
 
-    fun mapNumberLong(value: Number): Long {
-        return value.toLong()
+    fun mapNumberLong(value: Number?): Long? {
+        return value?.toLong()
     }
 
-    fun mapIntMonth(value: Int): Month {
-        return Month.of(value)
+    fun mapIntMonth(value: Int?): Month? {
+        return value?.let { Month.of(it) }
     }
 
-    fun mayIntYear(value: Int): Year {
-        return Year.of(value)
+    fun mayIntYear(value: Int?): Year? {
+        return value?.let { Year.of(it) }
     }
 
-    fun mapMonthInt(value: Month): Int {
-        return value.value
+    fun mapMonthInt(value: Month?): Int? {
+        return value?.value
     }
 
-    fun mayYearInt(value: Year): Int {
-        return value.value
+    fun mayYearInt(value: Year?): Int? {
+        return value?.value
     }
 }

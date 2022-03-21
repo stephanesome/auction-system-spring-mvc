@@ -19,12 +19,16 @@ class User {
     @Size(max = 120)
     var password: String = ""
 
+    var enabled: Boolean = false
+
+
     @Enumerated(EnumType.STRING)
     var role: ERole = ERole.ROLE_USER
 
     constructor() {}
-    constructor(username: String, password: String) {
+    constructor(username: String, password: String, enabled: Boolean) {
         this.username = username
         this.password = password
+        this.enabled = enabled
     }
 }

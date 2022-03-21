@@ -43,7 +43,7 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
     private fun setDb() {
         // create seller
         val sellerId = "seller000"
-        val sellerUser = User(sellerId, encoder.encode("pass"))
+        val sellerUser = User(sellerId, encoder.encode("pass"), true)
         userRepository.save(sellerUser)
         val seller = UserAccount(sellerId,
             "Toto",

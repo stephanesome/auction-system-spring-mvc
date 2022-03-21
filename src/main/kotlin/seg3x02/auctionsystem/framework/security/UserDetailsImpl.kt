@@ -8,6 +8,7 @@ import seg3x02.auctionsystem.framework.security.credentials.User
 
 class UserDetailsImpl(val id: Long, private val username: String,
                       @field:JsonIgnore private val password: String,
+                      private val enabled: Boolean,
                       private val authorities: Collection<GrantedAuthority>) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
@@ -35,7 +36,7 @@ class UserDetailsImpl(val id: Long, private val username: String,
     }
 
     override fun isEnabled(): Boolean {
-        return true
+        return enabled
     }
 }
 
@@ -46,6 +47,7 @@ fun build(user: User): UserDetailsImpl {
         user.id,
         user.username,
         user.password,
+        user.enabled,
         authorities)
 }
 
