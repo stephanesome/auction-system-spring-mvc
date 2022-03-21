@@ -13,6 +13,7 @@ import seg3x02.auctionsystem.domain.auction.core.Auction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.framework.jpa.dao.AuctionJpaRepository
 import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionCategoryJpaEntity
+import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionJpaEntity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,13 +39,26 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
 
     // @Cacheable
     @Transactional
-    override fun findByCategory(category: String): List<Auction> {
+    override fun findActiveByCategory(category: String): List<Auction> {
         val aucEnts = auctionRepository.findByCategory(AuctionCategoryJpaEntity(category))
+        return domainAuctions(aucEnts)
+    }
+
+    @Transactional
+    override fun findActive(): List<Auction> {
+        val aucEnts = auctionRepository.findAll()
+        return domainAuctions(aucEnts as List<AuctionJpaEntity>)
+    }
+
+    private fun domainAuctions(aucEnts: List<AuctionJpaEntity>): ArrayList<Auction> {
         val listAuctions = ArrayList<Auction>()
         for (aucEnt in aucEnts) {
-            val auc = converter.convertToModel(aucEnt)
-            listAuctions.add(auc)
+            if (!aucEnt.isclosed) {
+                listAuctions.add(converter.convertToModel(aucEnt))
+            }
         }
         return listAuctions
     }
+
+
 }

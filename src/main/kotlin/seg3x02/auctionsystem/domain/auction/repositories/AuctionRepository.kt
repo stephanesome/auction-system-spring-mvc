@@ -6,5 +6,6 @@ import java.util.*
 interface AuctionRepository {
     fun save(auction: Auction): Auction
     fun find(id: UUID): Auction?
-    fun findByCategory(category: String): List<Auction>
+    fun findActiveByCategory(category: String): List<Auction>
+    fun findActive(): List<Auction>
 }

@@ -15,7 +15,8 @@ interface AuctionFacade {
     fun placeBid(auctionId: UUID, bidInfo: BidCreateDto): UUID?
     fun includesAuctionsInProgress(auctionIds: List<UUID>): Boolean
     fun getAuctionCloseTime(auctionId: UUID): LocalDateTime?
-    fun getAuctionsBasedOnCategory(category: String): List<Auction>
-    fun getHighestBidAmount(auctionId: UUID): BigDecimal?
+    fun getActiveAuctionsBasedOnCategory(category: String): List<Auction>
+    fun getMinimumBidAmount(auctionId: UUID): BigDecimal?
     fun getAuction(auctionId: UUID): Auction?
+    fun getAllActiveAuctions(): List<Auction>
 }

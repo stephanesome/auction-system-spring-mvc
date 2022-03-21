@@ -19,7 +19,12 @@ class ViewAccountImpl(private val userFacade: UserFacade): ViewAccount {
         val account = userFacade.getUserAccount(userId)
         return if (account != null && account.active) {
             val auctions = browseAuctions.getUserAuctions(account)
-            accountConverter.convertToView(account, auctions)
+            if (account.creditCardNumber == null) {
+                accountConverter.convertToView(account, auctions)
+            } else {
+                val ccard = userFacade.getUserCreditCard(userId)
+                accountConverter.convertToViewCCard(account, auctions, ccard!!)
+            }
         } else {
             null
         }

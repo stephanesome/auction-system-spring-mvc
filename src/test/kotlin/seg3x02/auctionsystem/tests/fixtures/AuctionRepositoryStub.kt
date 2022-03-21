@@ -15,7 +15,11 @@ class AuctionRepositoryStub : AuctionRepository {
 
     override fun find(id: UUID): Auction? = auctions[id]
 
-    override fun findByCategory(category: String): List<Auction> {
+    override fun findActiveByCategory(category: String): List<Auction> {
+        TODO("Not yet implemented")
+    }
+
+    override fun findActive(): List<Auction> {
         TODO("Not yet implemented")
     }
 }

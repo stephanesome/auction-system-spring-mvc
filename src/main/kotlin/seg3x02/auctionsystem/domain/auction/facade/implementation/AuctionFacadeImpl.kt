@@ -5,7 +5,6 @@ import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
 import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.Bid
 import seg3x02.auctionsystem.domain.auction.events.AuctionClosed
 import seg3x02.auctionsystem.domain.auction.events.NewAuctionAdded
 import seg3x02.auctionsystem.domain.auction.events.NewBidCreated
@@ -84,16 +83,20 @@ class AuctionFacadeImpl(
         return auction?.closeTime()
     }
 
-    override fun getAuctionsBasedOnCategory(category: String): List<Auction> {
-        return auctionRepository.findByCategory(category)
+    override fun getActiveAuctionsBasedOnCategory(category: String): List<Auction> {
+        return auctionRepository.findActiveByCategory(category)
     }
 
-    override fun getHighestBidAmount(auctionId: UUID): BigDecimal? {
+    override fun getAllActiveAuctions(): List<Auction> {
+       return auctionRepository.findActive()
+    }
+
+    override fun getMinimumBidAmount(auctionId: UUID): BigDecimal? {
         val auction = auctionRepository.find(auctionId)
         val bidId = auction?.getLastBid()
         if (bidId != null) {
             val bid = bidRepository.find(bidId)
-            if (bid != null) return bid.amount
+            if (bid != null) return bid.amount + auction.minIncrement
         } else {
             return auction?.startPrice
         }

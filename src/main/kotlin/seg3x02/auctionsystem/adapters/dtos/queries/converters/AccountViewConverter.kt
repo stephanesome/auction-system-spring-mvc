@@ -18,6 +18,14 @@ abstract class AccountViewConverter {
     )
     abstract fun convertToView(account: UserAccount, aucList: List<AuctionBrowseDto>): AccountViewDto
 
+    @Mappings(
+        Mapping(target = "auctions", source = "aucList"),
+        Mapping(target = "userName", source = "account.id"),
+        Mapping(target = ".", source = "creditCard"),
+        Mapping(target = ".", source = "creditCard.accountAddress")
+    )
+    abstract fun convertToViewCCard(account: UserAccount, aucList: List<AuctionBrowseDto>, creditCard: CreditCard): AccountViewDto
+
     fun mapPendingPayment(pendingPayment: PendingPayment?): Double {
         return pendingPayment?.amount?.toDouble() ?: 0.0
     }

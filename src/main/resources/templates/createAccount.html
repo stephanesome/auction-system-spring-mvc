@@ -14,7 +14,7 @@
         <div class="container">
         <div th:switch="${createAccountStatus}">
             <p th:case="ok">
-                <span th:text="#{account-create-ok-message}">Bid too loo</span>
+                <span th:text="#{account-create-ok-message}">Created ok</span>
             </p>
             <p th:case="error">
                 <span th:text="#{account-create-error-message}">Error</span>

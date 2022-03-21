@@ -50,8 +50,14 @@
                 </form>
             </div>
             <div th:switch="${bidResult}">
+                <p th:case="ok">
+                    <span th:text="#{bid-ok-message}">Bid fine</span>
+                </p>
                 <p th:case="lowAmount">
-                    <span th:text="#{low-bid-message}">Bid too loo</span>
+                    <span th:text="#{low-bid-message}">Error Bid too low</span>
+                </p>
+                <p th:case="seller-bid">
+                    <span th:text="#{seller-bid-message}">Error Own bid</span>
                 </p>
                 <p th:case="error">
                     <span th:text="#{error-bid-message}">Error</span>

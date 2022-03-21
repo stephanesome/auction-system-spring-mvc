@@ -6,11 +6,15 @@ import seg3x02.auctionsystem.domain.auction.core.Auction
 import seg3x02.auctionsystem.domain.auction.facade.AuctionFacade
 import seg3x02.auctionsystem.domain.item.facade.ItemFacade
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BrowseAuctionsImpl(private val auctionFacade: AuctionFacade,
                          private val itemFacade: ItemFacade): BrowseAuctions {
     override fun getAuctions(category: String): List<AuctionBrowseDto> {
-        val auctionList = auctionFacade.getAuctionsBasedOnCategory(category)
+        val auctionList = if (category == null || category == "")
+            auctionFacade.getAllActiveAuctions()
+            else auctionFacade.getActiveAuctionsBasedOnCategory(category)
         return getAuctionBrowseList(auctionList)
     }
 
@@ -25,25 +29,43 @@ class BrowseAuctionsImpl(private val auctionFacade: AuctionFacade,
         return getAuctionBrowseList(auctionList)
     }
 
+    override fun getAuctionBrowse(id: UUID): AuctionBrowseDto? {
+        val auction = auctionFacade.getAuction(id)
+        return if (auction != null) {
+            auctionBrowseDto(auction)
+        } else {
+            null
+        }
+    }
+
     private fun getAuctionBrowseList(auctionList: List<Auction>): MutableList<AuctionBrowseDto> {
         val auctionBrowseList: MutableList<AuctionBrowseDto> = ArrayList()
         for (auc in auctionList) {
-            val minBid = auctionFacade.getHighestBidAmount(auc.id)
-            if (minBid != null) {
-                val aucItem = itemFacade.getItem(auc.item)
-                if (aucItem != null) {
-                    val aucDto = AuctionBrowseDto(
-                        auc.id,
-                        aucItem.title,
-                        aucItem.description,
-                        aucItem.image,
-                        auc.closeTime(),
-                        minBid
-                    )
-                    auctionBrowseList.add(aucDto)
-                }
+            var aucDto: AuctionBrowseDto? = auctionBrowseDto(auc)
+            if (aucDto != null) {
+                auctionBrowseList.add(aucDto)
             }
         }
         return auctionBrowseList
+    }
+
+    private fun auctionBrowseDto(auc: Auction): AuctionBrowseDto? {
+        var aucDto: AuctionBrowseDto? = null
+        val minBid = auctionFacade.getMinimumBidAmount(auc.id)
+        if (minBid != null) {
+            val aucItem = itemFacade.getItem(auc.item)
+            if (aucItem != null) {
+                aucDto = AuctionBrowseDto(
+                    auc.id,
+                    auc.seller,
+                    aucItem.title,
+                    aucItem.description,
+                    aucItem.image,
+                    auc.closeTime(),
+                    minBid
+                )
+            }
+        }
+        return aucDto
     }
 }
