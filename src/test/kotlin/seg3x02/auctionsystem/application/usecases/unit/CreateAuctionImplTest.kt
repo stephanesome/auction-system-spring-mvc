@@ -53,7 +53,7 @@ class CreateAuctionImplTest {
                         "Toto",
                         "Tata",
                         "toto@somewhere.com")
-                seller.creditCardNumber = 555555555
+                seller.creditCardNumber = "555555555"
 
                 accountRepository.save(seller)
 
@@ -104,7 +104,7 @@ class CreateAuctionImplTest {
                         "Ottawa",
                         "Canada",
                         "K0K0K0")
-                val ccNumber = 6666666
+                val ccNumber = "6666666"
                 val ccexYear = Year.parse("2024")
                 val ccexMonth = Month.AUGUST
                 val ccInfo = CreditCardCreateDto(ccNumber,
@@ -219,7 +219,7 @@ class CreateAuctionImplTest {
                         "Ottawa",
                         "Canada",
                         "K0K0K0")
-                val ccNumber = 6666666
+                val ccNumber = "6666666"
                 val ccexYear = Year.parse("2024")
                 val ccexMonth = Month.AUGUST
                 val ccInfo = CreditCardCreateDto(ccNumber,

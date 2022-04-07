@@ -24,7 +24,7 @@ class CreditCardJpaAdapter(private val creditCardRepository: CreditCardJpaReposi
     }
 
     @Cacheable(key = "#ccNumber")
-    override fun find(ccNumber: Number): CreditCard? {
+    override fun find(ccNumber: String): CreditCard? {
         val creditCardJpa = creditCardRepository.findByIdOrNull(ccNumber)
         return creditCardJpa?.let { converter.convertToModel(it) }
     }

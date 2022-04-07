@@ -12,7 +12,7 @@ class UserAccount(
     var firstname: String,
     var lastname: String,
     var email: String) {
-    var creditCardNumber: Number? = null
+    var creditCardNumber: String? = null
     val auctions: MutableList<UUID> = ArrayList()
     var bids: MutableList<UUID> = ArrayList()
     var active: Boolean = true

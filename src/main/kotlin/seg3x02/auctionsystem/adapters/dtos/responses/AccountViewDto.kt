@@ -10,7 +10,7 @@ class AccountViewDto(
     val email: String,
     val pendingPayment: Double,
     val auctions: MutableList<AuctionBrowseDto>,
-    var creditCardNumber: Number? = null,
+    var creditCardNumber: String? = null,
     var expirationMonth: Month? = null,
     var expirationYear: Year? = null,
     var accountFirstname: String? = null,

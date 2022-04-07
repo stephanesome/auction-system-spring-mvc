@@ -52,7 +52,7 @@ internal class BrowseAuctionsImplTest {
             "Tata",
             "toto@somewhere.com"
         )
-        val sellercc = CreditCard(5555555,
+        val sellercc = CreditCard("5555555",
             Month.JUNE,
             Year.parse("2024"),
             "Toto",

@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="author" content="S. Some">
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
 <link href="../static/css/style.css" rel="stylesheet"
 	th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="grid-container">
+<div class="container-fluid">
   <div th:replace="~{fragments/header :: header}">Header</div>
   <div th:replace="~{fragments/menu :: menu}">Menu</div>
-  <div class="content">
+  <div class="container-fluid">
     <p th:utext="#{welcome.text}">Main</p>
+    <div th:replace="~{fragments/auction-list :: auction-list(canselect='true', list=${auctions})}">Auctions</div>
   </div>  
   </div>
 </body>

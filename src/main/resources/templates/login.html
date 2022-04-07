@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="S. Some">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link href="../static/css/style.css" rel="stylesheet"
           th:href="@{/css/style.css}" />
 </head>
 <body>
-<div class="grid-container">
+<div class="container-fluid">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
     <div class="content">
@@ -15,21 +16,15 @@
             Invalid username and password.
         </div>
         <form th:action="@{/login}" method="post">
-            <table>
-                <tbody>
-                <tr>
-                    <td th:text="#{loginPage.username}">User Name :</td>
-                    <td><input id="loginId" type="text"  name="username"/></td>
-                </tr>
-                <tr>
-                    <td th:text="#{loginPage.password}">Password :</td>
-                    <td><input id="loginPasswd" type="password"  name="password"/></td>
-                </tr>
-                <tr>
-                    <td><input id="loginBtn" type="submit" th:value="#{loginPage.signin}"/></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="form-group">
+                <label for="loginId" th:text="#{loginPage.username}">User Name </label>
+                <input id="loginId" class="form-control" type="text"  name="username"/>
+            </div>
+            <div class="form-group">
+                <label for="loginPasswd" th:text="#{loginPage.password}">Password :</label>
+                <input id="loginPasswd" class="form-control"  type="password"  name="password"/></td>
+            </div>
+            <button id="loginBtn" class="btn btn-primary" type="submit" th:text="#{loginPage.signin}"></button>
         </form>
     </div>
 </div>

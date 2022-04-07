@@ -2,66 +2,88 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="author" content="S. Some">
+    <meta content="S. Some" name="author">
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " th:rel="stylesheet"/>
     <link href="../static/css/style.css" rel="stylesheet"
-          th:href="@{/css/style.css}" />
+          th:href="@{/css/style.css}"/>
 </head>
 <body>
-<div class="grid-container">
+<div class="container-fluid">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
     <div class="content">
-        <div class="auction-grid-container">
-            <div class="item-image">
-                <img src="../../images/laptop" width="250pt" alt="Image"
-                     th:src="@{'/item/image/' + ${auction.id}}"/>
+        <div class="container">
+            <div class="col" th:switch="${bidResult}">
+                <div th:case="ok" class="alert alert-info alert-dismissible fade show">
+                    <span th:text="#{bid-ok-message}">Bid fine</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:case="lowAmount" class="alert alert-danger alert-dismissible fade show">
+                    <span th:text="#{low-bid-message}">Error Bid too low</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:case="seller-bid" class="alert alert-danger alert-dismissible fade show">
+                    <span th:text="#{seller-bid-message}">Error Own bid</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:case="error" class="alert alert-danger alert-dismissible fade show">
+                    <span th:text="#{error-bid-message}">Error</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
-            <div class="item-elements">
-                <p>
-                    <span th:text="${auction.itemTitle}">Title</span>
-                </p>
-                <p>
-                    Minimum Bid: <span th:text="${#numbers.formatCurrency(auction.currentMinBid)}"></span>
-                </p>
-                <p>
-                    Ends: <span th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}">Title</span>
-                </p>
-            </div>
-            <div class="item-description">
-                <textarea rows="5" cols="40" th:text="${auction.itemDescription}">
+            <div class="row">
+                <div class="media mb-3">
+                    <img alt="Image" class="mr-3" src="../../images/laptop"
+                         th:src="@{'/item/image/' + ${auction.id}}"
+                         width="250pt"/>
+                    <div class="media-body">
+                        <p>
+                        <h4 class="mt-0"><span th:text="${auction.itemTitle}">Title</span></h4>
+                        </p>
+                        <p>
+                            Minimum Bid: <span th:text="${#numbers.formatCurrency(auction.currentMinBid)}"></span>
+                        </p>
+                        <p>
+                            Ends: <span
+                                th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}">Title</span>
+                        </p>
+
+                        <div class="item-description">
+                <textarea cols="60" rows="5" th:text="${auction.itemDescription}">
                     Description
                 </textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="bid-area">
-                <form id="search-category-form" action="#" th:object="${bidForm}"
-                      th:action="@{/auth/placeBid}" method="post">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td th:text="#{place-bid-amount}">Bid Amount :</td>
-                        <td><input id="bid-amount" type="text" th:field="*{amount}" /></td>
-                        <td><input id="bid-btn" type="submit" th:value="#{place-bid-button}"/></td>
-                        <td><a href="browseAuctions.html"
-                               id="back-btn" type="button"
-                               th:href="@{/search}"> Continue</a></td>
-                    </tr>
-                    </tbody>
-                </table>
+
+            <div class="row my-4">
+                <form action="#"
+                      class="form-inline my-2 my-lg-0" id="bid-form" method="post"
+                      th:action="@{/auth/placeBid}" th:object="${bidForm}">
+                    <div class="form-group">
+                        <label for="bid-amount" th:text="#{place-bid-amount}"></label>
+                        <input class="form-control mx-sm-2" id="bid-amount"
+                               th:field="*{amount}" type="text"/>
+                    </div>
+                    <button class="btn btn-outline-dark my-2 my-md-0" id="bid-btn" th:text="#{place-bid-button}"
+                            type="submit">
+                    </button>
                 </form>
             </div>
-            <div th:switch="${bidResult}">
-                <p th:case="ok">
-                    <span th:text="#{bid-ok-message}">Bid fine</span>
-                </p>
-                <p th:case="lowAmount">
-                    <span th:text="#{low-bid-message}">Error Bid too low</span>
-                </p>
-                <p th:case="seller-bid">
-                    <span th:text="#{seller-bid-message}">Error Own bid</span>
-                </p>
-                <p th:case="error">
-                    <span th:text="#{error-bid-message}">Error</span>
-                </p>
+            <div class="row">
+            <a href="#"
+                   id="back-btn" th:href="@{/search}"
+                   th:text="#{auction-back-link}"
+               type="button"> Continue</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="S. Some">
+</head>
+<body>
+<div class="auction-list" th:fragment="auction-list(canselect, list)">
+    <form th:action="@{/auction}" method="get">
+        <div class="container">
+            <div class="row border align-items-center" th:each="auction : ${list}">
+                <div class="col" th:id="image-__${auction.id}__"
+                     data-toggle="tooltip" data-placement="top" th:title="#{auction.list.image.tip}">
+                    <div><img src="../../images/laptop" width="100pt" alt="Item Image"
+                              th:src="@{'/item/image/' + ${auction.id}}" /></div>
+                </div>
+                <div class="col" th:id="title-__${auction.id}__" th:text="${auction.itemTitle}"
+                     data-toggle="tooltip" data-placement="top" th:title="#{auction.list.title.tip}">Title</div>
+                <div class="col" th:id="min-__${auction.id}__" th:text="${#numbers.formatCurrency(auction.currentMinBid)}"
+                     data-toggle="tooltip" data-placement="top" th:title="#{auction.list.price.tip}">0</div>
+                <div class="col" th:id="end-__${auction.id}__" th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}"
+                     data-toggle="tooltip" data-placement="top" th:title="#{auction.list.end.tip}">End</div>
+                <div class="col" th:if="${canselect}">
+                    <button th:id="select-__${auction.id}__" class="btn btn-secondary"
+                            type="submit" name="selectedAuction"
+                            th:value="${auctionStat.index}" th:text="#{select-auction}">Select</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

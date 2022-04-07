@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="S. Some">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link href="../static/css/style.css" rel="stylesheet"
           th:href="@{/css/style.css}" />
 </head>
@@ -12,64 +13,14 @@
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
     <div class="content">
         <div class="container">
-<!--            <div th:switch="${updateAccountStatus}">
-                <p th:case="ok">
-                    <span th:text="#{account-create-ok-message}">Created ok</span>
-                </p>
-                <p th:case="error">
-                    <span th:text="#{account-create-error-message}">Error</span>
-                </p>
-            </div>-->
-            <div>
-                <form id="account-form" action="#" th:object="${accountData}"
-                      th:action="@{/auth/updateAccount}" method="post">
-                    <div class="row">
-                        <!--                         <label for="uname" th:text="#{account.username}"><b>Username</b></label>
-                                               <input id="uname" type="text" placeholder="Enter Username" name="uname" th:field="*{userName}"
-                                                th:value="*{userName}"/>
-                                                <label for="passwd" th:text="#{account.password}"><b></b></label>
-                                                <input id="passwd" type="password" placeholder="Enter Password" name="passwd" th:field="*{password}"/>-->
-                        <input id="uname" type="hidden" name="uname" th:field="*{userName}"/>
-                        <label for="fname" th:text="#{account.firstname}"><b></b></label>
-                        <input id="fname" type="text" th:field="*{firstname}" name="fname" />
-                        <label for="lname" th:text="#{account.lastname}"><b></b></label>
-                        <input id="lname" type="text" name="lname" th:field="*{lastname}"/>
-                        <label for="email" th:text="#{account.email}"><b></b></label>
-                        <input id="email" type="email" name="email" th:field="*{email}"/>
-                    </div>
-                    <div class="row">
-                        <label for="ccnumb" th:text="#{account.ccard.number}"><b>Card Number</b></label>
-                        <input id="ccnumb" type="text" name="ccnumb" th:field="*{number}"/>
-                        <label for="ccexpm" th:text="#{account.ccard.expmonth}"><b>Expiry Month</b></label>
-                        <input id="ccexpm" type="text" name="ccexpm" th:field="*{expirationMonth}"/>
-                        <label for="ccexpy" th:text="#{account.ccard.expyear}"><b>Expiry Year</b></label>
-                        <input id="ccexpy" type="text" name="ccexpy" th:field="*{expirationYear}"/>
-                    </div>
-                    <div class="row">
-                        <label for="ccfname" th:text="#{account.ccard.firstname}"><b>Holder Firstname</b></label>
-                        <input id="ccfname" type="text" name="ccfname" th:field="*{accountFirstname}"/>
-                        <label for="cclname" th:text="#{account.ccard.lastname}"><b>Holder Lastname</b></label>
-                        <input id="cclname" type="text" name="cclname" th:field="*{accountLastname}"/>
-                    </div>
-                    <div class="row">
-                        <label for="ccstreet" th:text="#{account.ccard.address.street}"><b>Street</b></label>
-                        <input id="ccstreet" type="text" name="ccstreet" th:field="*{street}"/>
-                        <label for="cccity" th:text="#{account.ccard.address.city}"><b>City</b></label>
-                        <input id="cccity" type="text" name="cccity" th:field="*{city}"/>
-                        <label for="cccountry" th:text="#{account.ccard.address.country}"><b>Country</b></label>
-                        <input id="cccountry" type="text" name="cccountry" th:field="*{country}"/>
-                        <label for="ccpcode" th:text="#{account.ccard.address.postalcode}"><b>Postal Code</b></label>
-                        <input id="ccpcode" type="text" name="ccpcode" th:field="*{postalCode}"/>
-                    </div>
-                    <div class="row">
-                        <button type="submit" name="update"
-                                th:text="#{account.update}">Submit</button>
-                    </div>
-                </form>
+            <div th:replace="~{fragments/account-form :: account-form(actionUrl='/auth/updateAccount', actionBtn='account.update', show='false')}">
             </div>
         </div>
     </div>
 </div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>
 

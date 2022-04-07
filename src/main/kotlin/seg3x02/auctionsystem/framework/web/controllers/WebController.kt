@@ -4,6 +4,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
@@ -22,6 +24,8 @@ import java.security.Principal
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
+import javax.validation.Valid
+import javax.validation.constraints.Min
 import kotlin.collections.ArrayList
 
 @Controller
@@ -31,6 +35,9 @@ class WebController(private val auctionService: AuctionService) {
         val searchRequest = SearchRequest()
         model.addAttribute("searchRequest", searchRequest)
         session.setAttribute("searchData", searchRequest)
+        val auctions = auctionService.findAuctions("")
+        session.setAttribute("auctions", auctions)
+        model.addAttribute("auctions", auctions)
         return "welcome"
     }
 
@@ -61,19 +68,27 @@ class WebController(private val auctionService: AuctionService) {
     }
 
     @GetMapping("/auction")
-    fun showAuction(@RequestParam selectedAuction: Int, model: Model, session: HttpSession): String {
+    fun showAuction(@RequestParam selectedAuction: Int,
+                    model: Model, session: HttpSession): String {
         val searchData = session.getAttribute("searchData")?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
-        val auction = (session.getAttribute("auctions") as List<AuctionBrowseDto>)[selectedAuction]
-        model.addAttribute("auction", auction)
-        model.addAttribute("bidForm", BidForm())
-        model.addAttribute("bidResult","")
-        session.setAttribute("selected", auction)
-        return "auction"
+        // val auction = (session.getAttribute("auctions") as List<AuctionBrowseDto>)[selectedAuction]
+        val auctions = session.getAttribute("auctions") as List<AuctionBrowseDto>?
+        return if (auctions != null &&
+            (selectedAuction >= 0 && selectedAuction < auctions.size)) {
+            val auction = auctions?.get(selectedAuction)
+            model.addAttribute("auction", auction)
+            model.addAttribute("bidForm", BidForm())
+            model.addAttribute("bidResult","")
+            session.setAttribute("selected", auction)
+            "auction"
+        } else {
+            "error"
+        }
     }
 
     @PostMapping(value = ["/auth/placeBid"])
-    fun placeBid(bidForm: BidForm,  model: Model, session: HttpSession): String {
+    fun placeBid(bidForm: BidForm,  model: Model, session: HttpSession, principal: Principal): String {
         val searchData = session.getAttribute("searchData")?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
         val auction = session.getAttribute("selected") as AuctionBrowseDto
@@ -81,15 +96,18 @@ class WebController(private val auctionService: AuctionService) {
         if (auction.currentMinBid > BigDecimal(bidForm.amount)) {
             model.addAttribute("bidResult","lowAmount")
         } else {
-            val account = session.getAttribute("currentUser") as AccountViewDto
-            if (account.userName == auction.sellerId) {
-                model.addAttribute("bidResult","seller-bid")
-            } else {
-                // call placebid with current user
-                if (auctionService.placeBid(account.userName, auction.id, bidForm.amount)) {
-                    model.addAttribute("bidResult", "ok")
+            // val account = session.getAttribute("currentUser") as AccountViewDto
+            val account = getCurrentUser(session, principal)
+            if (account != null) {
+                if (account.userName == auction.sellerId) {
+                    model.addAttribute("bidResult","seller-bid")
                 } else {
-                    model.addAttribute("bidResult", "error")
+                    // call placebid with current user
+                    if (auctionService.placeBid(account.userName, auction.id, bidForm.amount)) {
+                        model.addAttribute("bidResult", "ok")
+                    } else {
+                        model.addAttribute("bidResult", "error")
+                    }
                 }
             }
         }
@@ -102,19 +120,24 @@ class WebController(private val auctionService: AuctionService) {
         model.addAttribute("searchRequest", searchData)
         val accountData = AccountForm()
         model.addAttribute("accountData", accountData)
+        model.addAttribute("ccardErrors", false)
         return "createAccount"
     }
 
     @PostMapping(value = ["/register"])
-    fun createAccount(accountData: AccountForm, model: Model, session: HttpSession): String {
+    fun createAccount(@Valid @ModelAttribute("accountData") accountData: AccountForm, bindingResults: BindingResult,
+                      model: Model, session: HttpSession): String {
         val searchData = session.getAttribute("searchData")?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
-        if (auctionService.createAccount(accountData)) {
-            model.addAttribute("createAccountStatus", "ok")
-            model.addAttribute("accountData", AccountForm())
-        } else {
-            model.addAttribute("createAccountStatus", "error")
-            model.addAttribute("accountData", accountData)
+        model.addAttribute("accountData", accountData)
+        model.addAttribute("ccardErrors", creditCardFormErrors(bindingResults))
+        if (!bindingResults.hasErrors()) {
+            if (auctionService.createAccount(accountData)) {
+                model.addAttribute("createAccountStatus", "ok")
+                model.addAttribute("accountData", AccountForm())
+            } else {
+                model.addAttribute("createAccountStatus", "error")
+            }
         }
         return "createAccount"
     }
@@ -131,21 +154,40 @@ class WebController(private val auctionService: AuctionService) {
         model.addAttribute("searchRequest", searchData)
         val account = session.getAttribute("currentUser") as AccountViewDto
         val accountData = auctionService.setAccountForm(account)
+        accountData.password = "xxxx"
+        accountData.passwordConf = "xxxx"
         // session.setAttribute("accountData", accountData)
         model.addAttribute("accountData", accountData)
+        model.addAttribute("ccardErrors", false)
         return "updateAccount"
     }
 
     @PostMapping(value = ["/auth/updateAccount"])
-    fun doUpdateAccount(accountData: AccountForm, model: Model, session: HttpSession): String {
+    fun doUpdateAccount(@Valid @ModelAttribute("accountData") accountData: AccountForm,
+                        bindingResults: BindingResult,
+                        model: Model, session: HttpSession): String {
         val searchData = session.getAttribute("searchData")?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
+        model.addAttribute("ccardErrors", creditCardFormErrors(bindingResults))
         // call service to update - pass account and accountData
-        var account = session.getAttribute("currentUser") as AccountViewDto
-        auctionService.updateAccount(account, accountData)
-        // val accountData = session.getAttribute("accountData")?: AccountForm()
+        if (!bindingResults.hasErrors()) {
+            var account = session.getAttribute("currentUser") as AccountViewDto
+            auctionService.updateAccount(account, accountData)
+        }
         model.addAttribute("accountData", accountData)
         return "updateAccount"
+    }
+
+    @GetMapping(value = ["/auth/deactivateAccount"])
+    fun deactivateAccount(principal: Principal, model: Model, session: HttpSession): ModelAndView {
+        val account = session.getAttribute("currentUser") as AccountViewDto?
+        return if (account != null && auctionService.deactivate(account.userName)) {
+            ModelAndView("redirect:/logout")
+        } else {
+            model.addAttribute("deactivateAccountStatus", "error")
+            setAccountViewModel(session, model, principal)
+            ModelAndView("account")
+        }
     }
 
     private fun setAccountViewModel(
@@ -155,13 +197,18 @@ class WebController(private val auctionService: AuctionService) {
     ) {
         val searchData = session.getAttribute("searchData") ?: SearchRequest()
         model.addAttribute("searchRequest", searchData)
+        var account = getCurrentUser(session, principal)
+        model.addAttribute("account", account)
+    }
+
+    private fun getCurrentUser(session: HttpSession, principal: Principal): AccountViewDto? {
         var account = session.getAttribute("currentUser")
         if (account == null) {
             val userid = principal.name
             account = auctionService.getAccount(userid)
             session.setAttribute("currentUser", account)
         }
-        model.addAttribute("account", account)
+        return account as AccountViewDto
     }
 
     @GetMapping(value = ["/auth/newAuction"])
@@ -171,21 +218,25 @@ class WebController(private val auctionService: AuctionService) {
         model.addAttribute("createAuctionStatus", null)
         val auctionData = AuctionForm()
         model.addAttribute("auctionData", auctionData)
+        model.addAttribute("ccardErrors", false)
         return "newAuction"
     }
 
     @PostMapping(value = ["/auth/createAuction"], consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
-    fun addAuction(auctionData: AuctionForm, model: Model, session: HttpSession): String {
+    fun addAuction(@Valid @ModelAttribute("auctionData") auctionData: AuctionForm, bindingResults: BindingResult,
+                   model: Model, session: HttpSession): String {
         val searchData = session.getAttribute("searchData")
         model.addAttribute("searchRequest", searchData)
-        // create the auction here
-        val account = session.getAttribute("currentUser") as AccountViewDto
-        if (auctionService.createAuction(account, auctionData)) {
-            model.addAttribute("createAuctionStatus", "ok")
-        } else {
-            model.addAttribute("createAuctionStatus", "error")
+        model.addAttribute("ccardErrors", creditCardFormErrors(bindingResults))
+        if (!bindingResults.hasErrors()) {
+            // create the auction here
+            val account = session.getAttribute("currentUser") as AccountViewDto
+            if (auctionService.createAuction(account, auctionData)) {
+                model.addAttribute("createAuctionStatus", "ok")
+            } else {
+                model.addAttribute("createAuctionStatus", "error")
+            }
         }
-
         model.addAttribute("auctionData", auctionData)
         return "newAuction"
     }
@@ -196,25 +247,10 @@ class WebController(private val auctionService: AuctionService) {
         setupImage(response, auctions, id)
     }
 
-/*    @GetMapping("/auth/selectedItem/image")
-    fun showSelectedItemImage(session: HttpSession, response: HttpServletResponse) {
-        val auction = session.getAttribute("selected") as AuctionBrowseDto
-        response.contentType = "image/jpeg"
-        val str: InputStream = ByteArrayInputStream(auction.itemImage)
-        IOUtils.copy(str, response.outputStream)
-    }*/
-
     @GetMapping("/auth/item/image/{id}")
     fun showAccountItemImage(@PathVariable id: UUID, session: HttpSession, response: HttpServletResponse) {
         val account = session.getAttribute("currentUser") as AccountViewDto
         setupImage(response, account.auctions, id)
-    }
-
-    @GetMapping(value = ["/auth/deactivateAccount"])
-    fun deactivateAccount(model: Model, session: HttpSession): ModelAndView {
-        val account = session.getAttribute("currentUser") as AccountViewDto
-        auctionService.deactivate(account.userName)
-        return ModelAndView("redirect:/logout")
     }
 
     private fun setupImage(
@@ -230,5 +266,15 @@ class WebController(private val auctionService: AuctionService) {
         IOUtils.copy(str, response.outputStream)
     }
 
-
+    private fun creditCardFormErrors(bindingResults: BindingResult): Boolean {
+        return bindingResults.hasFieldErrors("number") ||
+                bindingResults.hasFieldErrors("expirationMonth") ||
+                bindingResults.hasFieldErrors("expirationYear") ||
+                bindingResults.hasFieldErrors("accountFirstname") ||
+                bindingResults.hasFieldErrors("accountLastname") ||
+                bindingResults.hasFieldErrors("street") ||
+                bindingResults.hasFieldErrors("city") ||
+                bindingResults.hasFieldErrors("country") ||
+                bindingResults.hasFieldErrors("postalCode")
+    }
 }

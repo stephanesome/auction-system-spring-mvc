@@ -10,7 +10,7 @@ class UserAccountJpaEntity(@Id val id: String,
                            val lastname: String,
                            val email: String
     ) {
-    var creditCardNumber: Number? = null
+    var creditCardNumber: String? = null
     @ElementCollection
     val auctions: MutableList<UUID> = ArrayList()
     @ElementCollection

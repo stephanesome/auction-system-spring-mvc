@@ -7,7 +7,7 @@ import java.time.Year
 
 class CreditServiceAdapterStub : CreditService {
     override fun processPayment(
-        number: Number,
+        number: String,
         expirationMonth: Month,
         expirationYear: Year,
         amt: BigDecimal

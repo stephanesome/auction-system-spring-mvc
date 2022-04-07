@@ -9,7 +9,7 @@ import java.time.Year
 @Component
 class CreditServiceAdapter: CreditService {
     override fun processPayment(
-        number: Number,
+        number: String,
         expirationMonth: Month,
         expirationYear: Year,
         amt: BigDecimal

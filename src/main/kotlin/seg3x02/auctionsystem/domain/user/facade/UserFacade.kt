@@ -11,7 +11,7 @@ import java.util.*
 interface UserFacade {
     fun addCreditCard(userId: String, creditCardInfo: CreditCardCreateDto)
     fun hasPendingPayment(userId: String): Boolean
-    fun getCreditCardNumber(userId: String): Number?
+    fun getCreditCardNumber(userId: String): String?
     fun addAuctionToSeller(userId: String, auctionId: UUID)
     fun createAccount(accountInfo: AccountCreateDto): Boolean
     fun updateAccount(userId: String, accountInfo: AccountCreateDto): Boolean

@@ -4,7 +4,7 @@ import java.time.Month
 import java.time.Year
 
 data class CreditCardCreateDto(
-    val number: Number,
+    val number: String,
     val expirationMonth: Month,
     val expirationYear: Year,
     val accountFirstname: String,

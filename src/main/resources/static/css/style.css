@@ -1,11 +1,16 @@
 body {
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255, 0.7);
     background-image: url("../images/itemsbagr.jpg");
-    background-blend-mode: lighten;
-    font-size: 14px;
+    background-blend-mode: soft-light;
+    /* font-size: 14px;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
-    color: #000000;
+    color: #000000; */
     margin: 10px 150px 100px 80px;
+}
+
+.account-btn {
+   background-color: darkblue;
+    color: blanchedalmond;
 }
 
 .header {
@@ -19,6 +24,7 @@ body {
     align-content: space-around;
 }
 
+/*
 .menu {
     grid-area: menu;
     border-bottom-color: blue;
@@ -28,7 +34,7 @@ body {
     align-items: baseline;
     justify-content: space-between;
     gap: 10px;
-}
+}*/
 
 .content {
     grid-area: content;
@@ -37,19 +43,17 @@ body {
     justify-content: center;
 }
 
-.grid-container {
+/*.grid-container {
     display: grid;
     grid-template-areas:
     'header header header header header'
     'menu menu menu menu menu'
     'content content content content content';
-    /* grid-gap: 20px; */
-    /* padding: 10px; */
-}
+}*/
 
-.grid-container > div {
+/*.grid-container > div {
     text-align: left;
-}
+}*/
 
 .auction-grid-container {
     display: grid;
@@ -61,11 +65,11 @@ body {
     padding: 10px;
 }
 
-.row {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
+/**.row {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    flex-wrap: wrap;*/
+/*}**/
 
 .account-content {
     display: flex;

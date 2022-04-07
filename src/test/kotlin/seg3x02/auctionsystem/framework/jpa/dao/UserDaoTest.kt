@@ -43,7 +43,7 @@ class UserDaoTest {
             "Tata",
             "toto@somewhere.com"
         )
-        user.creditCardNumber = 555555555
+        user.creditCardNumber = "555555555"
         user.pendingPayment = PendingPayment(
             BigDecimal(100)
         )
@@ -62,7 +62,7 @@ class UserDaoTest {
 
     @Test
     fun find_user_account() {
-        val creditCardNumber = 555555555
+        val creditCardNumber = "555555555"
         val userId = "userYYY"
         val user = UserAccountJpaEntity(userId,
             "Toto",

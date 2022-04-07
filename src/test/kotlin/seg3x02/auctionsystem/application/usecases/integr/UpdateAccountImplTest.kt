@@ -46,7 +46,7 @@ class UpdateAccountImplTest {
         user.pendingPayment = PendingPayment(
             pendingAmount
         )
-        val usercc = CreditCard(5555555,
+        val usercc = CreditCard("5555555",
             Month.JUNE,
             Year.parse("2021"),
             "Toto",
@@ -67,7 +67,7 @@ class UpdateAccountImplTest {
             "Ottawa",
             "Canada",
             "K0K0K0")
-        val updatedCcNumber = 6666666
+        val updatedCcNumber = "6666666"
         val updatedCcexYear = Year.parse("2024")
         val updatedCcexMonth = Month.AUGUST
         val cc = CreditCardCreateDto(updatedCcNumber,
@@ -104,7 +104,7 @@ class UpdateAccountImplTest {
             "toto@somewhere.com"
         )
         user.pendingPayment = null
-        val usercc = CreditCard(5555555,
+        val usercc = CreditCard("5555555",
             Month.JUNE,
             Year.parse("2021"),
             "Toto",
@@ -125,7 +125,7 @@ class UpdateAccountImplTest {
             "Ottawa",
             "Canada",
             "K0K0K0")
-        val updatedCcNumber = 6666666
+        val updatedCcNumber = "6666666"
         val updatedCcexYear = Year.parse("2024")
         val updatedCcexMonth = Month.AUGUST
         val cc = CreditCardCreateDto(updatedCcNumber,
@@ -165,7 +165,7 @@ class UpdateAccountImplTest {
         user.pendingPayment = PendingPayment(
             pendingAmount
         )
-        val usercc = CreditCard(5555555,
+        val usercc = CreditCard("5555555",
             Month.JUNE,
             Year.parse("2021"),
             "Toto",

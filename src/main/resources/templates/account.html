@@ -3,51 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="S. Some">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
     <link href="../static/css/style.css" rel="stylesheet"
-          th:href="@{/css/style.css}" />
+          th:href="@{/css/style.css}"/>
 </head>
 <body>
-<div class="grid-container">
+<div class="container-fluid">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
-    <div class="content">
-        <div class="account-content">
-            <div class="account-content-menu">
-                <div>
-                <a href="newAuction.html"
-                   id="new-auction-btn" type="button"
-                   th:href="@{/auth/newAuction}"> Create Auction</a>
-                </div>
-                <div>
-                <a href="updateAccount.html"
-                   id="update-btn" type="button"
-                   th:href="@{/auth/updateAccount}"> Update Account</a>
-                </div>
-                <div>
-                <a href="#"
-                   id="deactivate-btn" type="button"
-                   th:href="@{/auth/deactivateAccount}"> Deactivate Account</a>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="nav flex-column">
+                    <a class="nav-link account-btn" href="newAuction.html"
+                       id="new-auction-btn" type="button"
+                       th:href="@{/auth/newAuction}"> Create Auction</a>
+                    <a class="nav-link account-btn" href="updateAccount.html"
+                       id="update-btn" type="button"
+                       th:href="@{/auth/updateAccount}"> Update Account</a>
+                    <a class="nav-link account-btn" href="#"
+                       id="deactivate-btn" type="button"
+                       th:href="@{/auth/deactivateAccount}"> Deactivate Account</a>
+                </nav>
             </div>
-            <div class="account-content-info">
-                <div th:if="${account.pendingPayment > 0.0}">
-                <p th:text="#{account-pending-payment-warning}"></p>
+            <div class="col-md-9">
+                <div class="container-fluid">
+                    <div class="row" th:if="${deactivateAccountStatus == 'error'}">
+                        <p>
+                            <span>Cannot Deactivate</span>
+                        </p>
+                    </div>
+                    <div class="row" th:if="${account.pendingPayment > 0.0}">
+                        <p th:text="#{account-pending-payment-warning}"></p>
+                    </div>
+                    <div class="row"
+                         th:replace="~{fragments/auction-list :: auction-list(canselect='false', list=${account.auctions})}">
+                        Auctions
+                    </div>
                 </div>
-                <table>
-                    <tbody>
-                    <tr th:each="auction : ${account.auctions}">
-                        <td th:id="image-__${auction.id}__" >
-                            <div><img src="../../images/laptop" width="100pt" alt="Item Image"
-                                      th:src="@{'/auth/item/image/' + ${auction.id}}" /></div>
-                        </td>
-                        <td th:id="title-__${auction.id}__" th:text="${auction.itemTitle}">Title</td>
-                        <td th:id="min-__${auction.id}__" th:text="${#numbers.formatCurrency(auction.currentMinBid)}">0</td>
-                        <td th:id="end-__${auction.id}__" th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}"></td>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 </div>
 </body>
+
+<!--<div class="content">
+    <div class="account-content">
+        <div class="account-content-menu">
+            <div>
+                <a href="newAuction.html"
+                   id="new-auction-btn" type="button"
+                   th:href="@{/auth/newAuction}"> Create Auction</a>
+            </div>
+            <div>
+                <a href="updateAccount.html"
+                   id="update-btn" type="button"
+                   th:href="@{/auth/updateAccount}"> Update Account</a>
+            </div>
+            <div>
+                <a href="#"
+                   id="deactivate-btn" type="button"
+                   th:href="@{/auth/deactivateAccount}"> Deactivate Account</a>
+            </div>
+        </div>
+        <div th:if="${deactivateAccountStatus == 'error'}">
+            <p>
+                <span>Cannot Deactivate</span>
+            </p>
+        </div>
+        <div class="account-content-info">
+            <div th:if="${account.pendingPayment > 0.0}">
+                <p th:text="#{account-pending-payment-warning}"></p>
+            </div>
+            <table>
+                <tbody>
+                <tr th:each="auction : ${account.auctions}">
+                    <td th:id="image-__${auction.id}__" >
+                        <div><img src="../../images/laptop" width="100pt" alt="Item Image"
+                                  th:src="@{'/auth/item/image/' + ${auction.id}}" /></div>
+                    </td>
+                    <td th:id="title-__${auction.id}__" th:text="${auction.itemTitle}">Title</td>
+                    <td th:id="min-__${auction.id}__" th:text="${#numbers.formatCurrency(auction.currentMinBid)}">0</td>
+                    <td th:id="end-__${auction.id}__" th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}"></td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>-->
+
 </html>

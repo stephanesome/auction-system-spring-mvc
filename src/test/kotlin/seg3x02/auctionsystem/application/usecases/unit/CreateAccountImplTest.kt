@@ -40,7 +40,7 @@ class CreateAccountImplTest {
             "Ottawa",
             "Canada",
             "K0K0K0")
-        val cc = CreditCardCreateDto(5555555,
+        val cc = CreditCardCreateDto("5555555",
             Month.JUNE,
             Year.parse("2024"),
             "Toto",

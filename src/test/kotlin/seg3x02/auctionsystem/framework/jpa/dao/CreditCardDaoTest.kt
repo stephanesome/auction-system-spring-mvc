@@ -37,8 +37,8 @@ class CreditCardDaoTest {
 
     @Test
     fun save_creditCard() {
-        val ccNumber = 5555555
-        val cc = CreditCard(5555555,
+        val ccNumber = "5555555"
+        val cc = CreditCard(ccNumber,
             Month.JUNE,
             Year.parse("2024"),
             "Toto",
@@ -62,8 +62,8 @@ class CreditCardDaoTest {
 
     @Test
     fun find_creditCard() {
-        val ccNumber = 5555555
-        val cc = CreditCardJpaEntity(5555555,
+        val ccNumber = "5555555"
+        val cc = CreditCardJpaEntity(ccNumber,
             Month.JUNE,
             Year.parse("2024"),
             "Toto",

@@ -1,30 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="author" content="S. Some">
+    <meta charset="UTF-8">
+    <meta name="author" content="S. Some">
 </head>
 <body>
-	<div class="menu" th:fragment="menu">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="menu">
+    <div class="container-fluid">
+
+        <form class="form-inline my-2 my-lg-0"
+              id="search-category-form" action="#" th:object="${searchRequest}"
+              th:action="@{/search}" method="post">
+            <div class="form-group">
+                <input id="search-cat" class="form-control mr-sm-2"
+                       type="search" th:placeholder="#{menu.search.category}" th:field="*{category}"/>
+            </div>
+            <button class="btn btn-outline-success my-2 my-md-0" type="submit"
+                    th:text="#{menu.search.submit}">Search
+            </button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                <a class="nav-link" href="../login.html"
+                   id="sign-up-btn" type="button"
+                   th:href="@{/register}"> Create Account</a></td>
+            </li>
+            <li class="nav-item" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                <a class="nav-link" href="../login.html"
+                   id="login-btn" type="button"
+                   th:href="@{/login}"> Sign In</a></td>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated">
+                <a class="nav-link" href="../account.html"
+                   id="account-btn" type="button"
+                   th:href="@{/auth/account}"> View Account</a></td>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated">
+                <a class="nav-link" href="logout.html"
+                   id="logout-btn" type="button"
+                   th:href="@{/logout}"> Sign Out</a></td>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--	<div class="menu" th:fragment="menu">
 		<form id="search-category-form" action="#" th:object="${searchRequest}"
-			th:action="@{/search}" method="post">
+			  th:action="@{/search}" method="post">
 			<table>
 				<tbody>
-					<tr>
-						<td th:text="#{menu.search.category}">Category :</td>
-						<td><input id="search-cat" type="text" th:field="*{category}" /></td>
-<!--					</tr>-->
-<!--					<tr>-->
-						<td><input id="searchBtn" type="submit" th:value="#{menu.search.submit}" />
-						</td>
-					</tr>
+				<tr>
+					<td th:text="#{menu.search.category}">Category :</td>
+					<td><input id="search-cat" type="text" th:field="*{category}" /></td>
+					&lt;!&ndash;					</tr>&ndash;&gt;
+					&lt;!&ndash;					<tr>&ndash;&gt;
+					<td><input id="searchBtn" type="submit" th:value="#{menu.search.submit}" />
+					</td>
+				</tr>
 				</tbody>
 			</table>
 		</form>
 		<div style="align-self: flex-end" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-			<!--			<form th:action="@{/login}" method="get">
+			&lt;!&ndash;			<form th:action="@{/login}" method="get">
                             <input type="submit" th:value="#{menu.signin}"/>
-                        </form>-->
+                        </form>&ndash;&gt;
 			<a href="../login.html"
 			   id="sign-up-btn" type="button"
 			   th:href="@{/register}"> Create Account</a></td>
@@ -42,6 +81,6 @@
 			   id="logout-btn" type="button"
 			   th:href="@{/logout}"> Sign Out</a></td>
 		</div>
-	</div>
+	</div>-->
 </body>
 </html>

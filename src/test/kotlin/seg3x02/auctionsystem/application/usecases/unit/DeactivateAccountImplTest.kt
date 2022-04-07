@@ -99,7 +99,7 @@ internal class DeactivateAccountImplTest {
             "Tata",
             userEmail
         )
-        user.creditCardNumber = 5555555555
+        user.creditCardNumber = "5555555555"
 
         // create auctions added to user account
         val auction1Id = UUID.randomUUID()
@@ -141,7 +141,7 @@ internal class DeactivateAccountImplTest {
             "Tata",
             userEmail
         )
-        user.creditCardNumber = 5555555555
+        user.creditCardNumber = "5555555555"
 
         // create auctions added to user account
         val auction1Id = UUID.randomUUID()
@@ -179,7 +179,7 @@ internal class DeactivateAccountImplTest {
             "Tata",
             userEmail
         )
-        user.creditCardNumber = 5555555555
+        user.creditCardNumber = "5555555555"
 
         // create auctions added to user account
         val auction1Id = UUID.randomUUID()

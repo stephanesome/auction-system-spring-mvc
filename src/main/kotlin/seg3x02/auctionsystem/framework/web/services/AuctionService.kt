@@ -44,9 +44,7 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
             userRepository.save(user!!)
             // invoke create Account use
             val account = accountConverter.convertFormAccount(accountData)
-            if ((accountData.number != null) &&
-                (accountData.number != 0L)
-            ) {
+            if (accountData.number != null && accountData.number!!.isNotEmpty()) {
                 val address = accountConverter.convertFormAddress(accountData)
                 val cCard = accountConverter.convertFormCreditCard(accountData, address)
                 account.creditCardInfo = cCard
@@ -99,8 +97,8 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
         val accountDto = accountConverter.convertFormAccount(accountData)
         accountDto.creditCardInfo = null
         if (accountData.number != null &&
-            accountData.number != 0L &&
-            accountCreditCardChange(account,accountData)) {
+            accountData.number!!.isNotEmpty() &&
+            ccChange) {
             val address = accountConverter.convertFormAddress(accountData)
             val cCard = accountConverter.convertFormCreditCard(accountData, address)
             accountDto.creditCardInfo = cCard
@@ -109,13 +107,16 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
     }
 
     fun deactivate(userName: String): Boolean {
-        val optUser = userRepository.findByUsername(userName)
-        if (optUser.isPresent) {
-            val user = optUser.get()
-            user.enabled = false
-            userRepository.save(user)
+        if (deactivateAccount.deactivateAccount(userName)) {
+            val optUser = userRepository.findByUsername(userName)
+            if (optUser.isPresent) {
+                val user = optUser.get()
+                user.enabled = false
+                userRepository.save(user)
+                return true
+            }
         }
-        return deactivateAccount.deactivateAccount(userName)
+        return false
     }
 
     private fun accountDataChange(account: AccountViewDto, accountData: AccountForm): Boolean {
@@ -125,7 +126,7 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
     }
 
     private fun accountCreditCardChange(account: AccountViewDto, accountData: AccountForm): Boolean {
-        return account.creditCardNumber != accountData.number ||
+        return  account.creditCardNumber != accountData.number ||
                 account.expirationMonth?.value != accountData.expirationMonth ||
                 account.expirationYear?.value != accountData.expirationYear ||
                 account.accountFirstname != accountData.accountFirstname ||

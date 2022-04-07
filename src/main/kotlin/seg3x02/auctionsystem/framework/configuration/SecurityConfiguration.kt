@@ -23,6 +23,7 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsServiceIm
             .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/auth/account")
                 .permitAll()
             .and()
                 .logout()

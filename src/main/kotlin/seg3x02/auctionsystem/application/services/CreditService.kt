@@ -5,5 +5,5 @@ import java.time.Month
 import java.time.Year
 
 interface CreditService {
-    fun processPayment(number: Number, expirationMonth: Month, expirationYear: Year, amt: BigDecimal): Boolean
+    fun processPayment(number: String, expirationMonth: Month, expirationYear: Year, amt: BigDecimal): Boolean
 }

@@ -6,6 +6,6 @@ import java.util.*
 class UserCreditCardSet(
     val id: UUID,
     val occuredOn: Date,
-    val creditCardNumber: Number,
+    val creditCardNumber: String,
     val userId: String): DomainEvent {
 }

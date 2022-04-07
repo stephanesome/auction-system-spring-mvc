@@ -46,7 +46,7 @@ class UserFacadeImpl(private val accountRepository: AccountRepository,
         return if (user == null) false else user.pendingPayment != null
     }
 
-    override fun getCreditCardNumber(userId: String): Number? {
+    override fun getCreditCardNumber(userId: String): String? {
         return accountRepository.find(userId)?.creditCardNumber
     }
 

@@ -42,7 +42,7 @@ class PlaceBidImplTest {
             "Tata",
             "toto@somewhere.com"
         )
-        buyer.creditCardNumber = 555555555
+        buyer.creditCardNumber = "555555555"
         buyer.pendingPayment = null
         accountRepository.save(buyer)
         // add auction to auction repository
@@ -75,7 +75,7 @@ class PlaceBidImplTest {
             "Tata",
             "toto@somewhere.com"
         )
-        buyer.creditCardNumber = 555555555
+        buyer.creditCardNumber = "555555555"
         buyer.pendingPayment = PendingPayment(
             BigDecimal(100)
         )
