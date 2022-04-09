@@ -12,6 +12,7 @@ import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import seg3x02.auctionsystem.domain.item.core.Item
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
+import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.domain.user.core.creditCard.Address
 import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
@@ -73,8 +74,8 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
             BigDecimal(100),
             BigDecimal(5),
             seller.id,
-            AuctionCategory(auctionCategory1)
-        )
+            AuctionCategory(auctionCategory1),
+        false)
         val itemId = UUID.randomUUID()
         val item = Item(itemId,
             "Game Boy",
@@ -116,8 +117,8 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
             BigDecimal(250),
             BigDecimal(2),
             seller.id,
-            AuctionCategory(auctionCategory1)
-        )
+            AuctionCategory(auctionCategory1),
+        false)
         val item2Id = UUID.randomUUID()
 
         val item2 = Item(item2Id,
@@ -128,6 +129,26 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
         auctionRepository.save(auction2)
         seller.auctions.add(auction2Id)
 
+        val auction2cId = UUID.randomUUID()
+        val auction2c = Auction(auction2cId,
+            LocalDateTime.now(),
+            Duration.ofDays(5),
+            BigDecimal(450),
+            BigDecimal(20),
+            seller.id,
+            AuctionCategory(auctionCategory1),
+            true
+        )
+        val item2Idc = UUID.randomUUID()
+
+        val item2c = Item(item2Idc,
+            "Nintendo-Closed",
+            "Very rare")
+        itemRepository.save(item2c)
+        auction2c.item = item2Idc
+        auctionRepository.save(auction2c)
+        seller.auctions.add(auction2cId)
+
         val auctionCategory2 = "Book"
         val auction3Id = UUID.randomUUID()
         val auction3 = Auction(auction3Id,
@@ -136,7 +157,8 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
             BigDecimal(20),
             BigDecimal(10),
             seller.id,
-            AuctionCategory(auctionCategory2)
+            AuctionCategory(auctionCategory2),
+            false
         )
         val item3Id = UUID.randomUUID()
 
@@ -164,5 +186,15 @@ class DataBaseInit(private val auctionRepository: AuctionRepository,
         auctionRepository.save(auction3)
         seller.auctions.add(auction3Id)
 
+        val user2Id = "user001"
+        val user2 = User(user2Id, encoder.encode("pass"), true)
+        userRepository.save(user2)
+        val user2acc = UserAccount(user2Id,
+            "Zaza",
+            "Mala",
+            "zaza@somewhere.com"
+        )
+        user2acc.pendingPayment = PendingPayment(BigDecimal(125.75))
+        accountRepository.save(user2acc)
     }
 }

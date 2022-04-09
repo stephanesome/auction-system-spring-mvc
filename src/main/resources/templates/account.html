@@ -29,12 +29,39 @@
             <div class="col-md-9">
                 <div class="container-fluid">
                     <div class="row" th:if="${deactivateAccountStatus == 'error'}">
-                        <p>
+                        <!--<p>
                             <span>Cannot Deactivate</span>
-                        </p>
+                        </p>-->
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <span th:text="#{account-deactivate-error-message}">Error</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="row" th:if="${account.pendingPayment > 0.0}">
-                        <p th:text="#{account-pending-payment-warning}"></p>
+                        <div class="alert alert-warning alert-dismissible fade show">
+                            <span th:text="#{account-pending-payment-warning} + ${account.pendingPayment}">Error</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" th:unless="${account.pendingPayment > 0.0}">
+                        <div class="alert alert-info alert-dismissible fade show">
+                            <span th:text="#{account-no-pending-payment}">Error</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div th:if="${account.auctions.isEmpty()}"  class="message">
+                            <p th:utext="#{welcome.account.text.no.auctions}">Main</p>
+                        </div>
+                        <div th:unless="${account.auctions.isEmpty()}"  class="message">
+                            <p th:utext="#{welcome.account.text}">Main</p>
+                        </div>
                     </div>
                     <div class="row"
                          th:replace="~{fragments/auction-list :: auction-list(canselect='false', list=${account.auctions})}">
@@ -45,51 +72,8 @@
         </div>
     </div>
 </div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
-
-<!--<div class="content">
-    <div class="account-content">
-        <div class="account-content-menu">
-            <div>
-                <a href="newAuction.html"
-                   id="new-auction-btn" type="button"
-                   th:href="@{/auth/newAuction}"> Create Auction</a>
-            </div>
-            <div>
-                <a href="updateAccount.html"
-                   id="update-btn" type="button"
-                   th:href="@{/auth/updateAccount}"> Update Account</a>
-            </div>
-            <div>
-                <a href="#"
-                   id="deactivate-btn" type="button"
-                   th:href="@{/auth/deactivateAccount}"> Deactivate Account</a>
-            </div>
-        </div>
-        <div th:if="${deactivateAccountStatus == 'error'}">
-            <p>
-                <span>Cannot Deactivate</span>
-            </p>
-        </div>
-        <div class="account-content-info">
-            <div th:if="${account.pendingPayment > 0.0}">
-                <p th:text="#{account-pending-payment-warning}"></p>
-            </div>
-            <table>
-                <tbody>
-                <tr th:each="auction : ${account.auctions}">
-                    <td th:id="image-__${auction.id}__" >
-                        <div><img src="../../images/laptop" width="100pt" alt="Item Image"
-                                  th:src="@{'/auth/item/image/' + ${auction.id}}" /></div>
-                    </td>
-                    <td th:id="title-__${auction.id}__" th:text="${auction.itemTitle}">Title</td>
-                    <td th:id="min-__${auction.id}__" th:text="${#numbers.formatCurrency(auction.currentMinBid)}">0</td>
-                    <td th:id="end-__${auction.id}__" th:text="${#temporals.format(auction.endTime, 'dd-MMM-yyyy HH:mm')}"></td>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-</div>-->
-
 </html>

@@ -11,9 +11,12 @@
 <div class="container-fluid">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
-    <div class="content">
-        <div th:if="${param.error}" th:text="#{loginPage.invalid}">
-            Invalid username and password.
+    <div class="login">
+        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
+            <span th:text="#{loginPage.invalid}">Login Error.</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <form th:action="@{/login}" method="post">
             <div class="form-group">

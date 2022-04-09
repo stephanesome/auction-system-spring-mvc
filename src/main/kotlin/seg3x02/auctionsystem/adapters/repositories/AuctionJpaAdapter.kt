@@ -40,14 +40,16 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
     // @Cacheable
     @Transactional
     override fun findActiveByCategory(category: String): List<Auction> {
-        val aucEnts = auctionRepository.findByCategory(AuctionCategoryJpaEntity(category))
+        //val aucEnts = auctionRepository.findByCategory(AuctionCategoryJpaEntity(category))
+        val aucEnts = auctionRepository.findByCategoryAndIsclosedIsFalse(AuctionCategoryJpaEntity(category))
         return domainAuctions(aucEnts)
     }
 
     @Transactional
     override fun findActive(): List<Auction> {
-        val aucEnts = auctionRepository.findAll()
-        return domainAuctions(aucEnts as List<AuctionJpaEntity>)
+        //val aucEnts = auctionRepository.findAll()
+        val aucEnts = auctionRepository.findByIsclosedFalse()
+        return domainAuctions(aucEnts)
     }
 
     private fun domainAuctions(aucEnts: List<AuctionJpaEntity>): ArrayList<Auction> {
@@ -59,6 +61,4 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
         }
         return listAuctions
     }
-
-
 }

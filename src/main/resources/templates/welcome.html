@@ -11,10 +11,12 @@
 <div class="container-fluid">
   <div th:replace="~{fragments/header :: header}">Header</div>
   <div th:replace="~{fragments/menu :: menu}">Menu</div>
-  <div class="container-fluid">
+  <div class="content">
+    <div class="message">
     <p th:utext="#{welcome.text}">Main</p>
+    </div>
     <div th:replace="~{fragments/auction-list :: auction-list(canselect='true', list=${auctions})}">Auctions</div>
-  </div>  
+    </div>
   </div>
 </body>
 </html>

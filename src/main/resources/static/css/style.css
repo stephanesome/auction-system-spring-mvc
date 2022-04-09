@@ -37,10 +37,27 @@ body {
 }*/
 
 .content {
-    grid-area: content;
     display: flex;
+    flex-direction: column;
     padding: 20px;
     justify-content: center;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-left: 400px;
+    padding-right: 400px;
+    justify-content: center;
+}
+
+.message {
+    padding-left: 250px;
+    padding-right: 250px;
+    font-size: x-large;
+    font-weight: bold;
+    color: darkblue;
 }
 
 /*.grid-container {
@@ -55,7 +72,7 @@ body {
     text-align: left;
 }*/
 
-.auction-grid-container {
+/*.auction-grid-container {
     display: grid;
     grid-template-areas:
     'item-image item-elements'
@@ -63,7 +80,7 @@ body {
     'bid-area bid-area';
     grid-gap: 20px;
     padding: 10px;
-}
+}*/
 
 /**.row {*/
 /*    display: flex;*/
@@ -71,7 +88,7 @@ body {
 /*    flex-wrap: wrap;*/
 /*}**/
 
-.account-content {
+/*.account-content {
     display: flex;
     flex-direction: column;
 }
@@ -86,7 +103,7 @@ body {
     display: flex;
     flex-direction: column;
     align-self: center;
-}
+}*/
 
 #title {
     background-color: rgb(255, 204, 153);
@@ -95,11 +112,11 @@ body {
     font-size:xx-large;
 }
 
-#cartLink {
+/*#cartLink {
     width:50px;
     position: absolute;
     right: 10px;
-}
+}*/
 
 h1 {
     font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
@@ -111,7 +128,7 @@ h1 {
     color: #D20005;
 }
 
-#feedback > h2 {
+/*#feedback > h2 {
     color: blue;
 }
 
@@ -122,4 +139,4 @@ h1 {
 
 #checkoutTable > td,  #checkoutTable > tr {
     padding: 50px;
-}
+}*/

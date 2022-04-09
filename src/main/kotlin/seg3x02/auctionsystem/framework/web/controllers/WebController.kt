@@ -1,17 +1,17 @@
 package seg3x02.auctionsystem.framework.web.controllers
 
 import org.apache.tomcat.util.http.fileupload.IOUtils
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.Resource
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
-import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
 import seg3x02.auctionsystem.adapters.dtos.responses.AccountViewDto
 import seg3x02.auctionsystem.adapters.dtos.responses.AuctionBrowseDto
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
 import seg3x02.auctionsystem.framework.web.forms.AccountForm
 import seg3x02.auctionsystem.framework.web.forms.AuctionForm
 import seg3x02.auctionsystem.framework.web.forms.BidForm
@@ -25,11 +25,12 @@ import java.util.*
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpSession
 import javax.validation.Valid
-import javax.validation.constraints.Min
-import kotlin.collections.ArrayList
 
 @Controller
 class WebController(private val auctionService: AuctionService) {
+    @Value("classpath:static/images/defaultImage.jpg")
+    lateinit var defaultImgResource: Resource
+
     @RequestMapping("/")
     fun showWelcome(model: Model, session: HttpSession): String {
         val searchRequest = SearchRequest()
@@ -244,13 +245,22 @@ class WebController(private val auctionService: AuctionService) {
     @GetMapping("/item/image/{id}")
     fun showBrowseItemImage(@PathVariable id: UUID, session: HttpSession, response: HttpServletResponse) {
         val auctions = session.getAttribute("auctions") as List<AuctionBrowseDto>
-        setupImage(response, auctions, id)
+        if (auctions == null) {
+            setupDefaultImage(response)
+        } else {
+            setupImage(response, auctions, id)
+        }
     }
 
     @GetMapping("/auth/item/image/{id}")
     fun showAccountItemImage(@PathVariable id: UUID, session: HttpSession, response: HttpServletResponse) {
         val account = session.getAttribute("currentUser") as AccountViewDto
         setupImage(response, account.auctions, id)
+    }
+
+    private fun setupDefaultImage(response: HttpServletResponse) {
+        val str = defaultImgResource.inputStream
+        IOUtils.copy(str, response.outputStream)
     }
 
     private fun setupImage(
@@ -262,8 +272,13 @@ class WebController(private val auctionService: AuctionService) {
         val auction = auctions.find {
             it.id == id
         }
-        val str: InputStream = ByteArrayInputStream(auction?.itemImage)
-        IOUtils.copy(str, response.outputStream)
+        if (auction?.itemImage == null ||
+                auction?.itemImage.isEmpty()) {
+            setupDefaultImage(response)
+        } else {
+            val str: InputStream = ByteArrayInputStream(auction?.itemImage)
+            IOUtils.copy(str, response.outputStream)
+        }
     }
 
     private fun creditCardFormErrors(bindingResults: BindingResult): Boolean {

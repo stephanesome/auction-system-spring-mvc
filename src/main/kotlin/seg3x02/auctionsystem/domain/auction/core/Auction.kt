@@ -14,9 +14,10 @@ class Auction(val id: UUID,
               val startPrice: BigDecimal,
               val minIncrement: BigDecimal,
               val seller: String,
-              val category: AuctionCategory) {
+              val category: AuctionCategory,
+              var isclosed: Boolean) {
     lateinit var item: UUID
-    var isclosed: Boolean = false
+    // var isclosed: Boolean = false
     val bids: MutableList<UUID> = ArrayList()
 
     fun createBid(bidInfo: BidCreateDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID? {

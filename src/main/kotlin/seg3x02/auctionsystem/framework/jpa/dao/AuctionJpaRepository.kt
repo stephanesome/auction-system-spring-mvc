@@ -7,4 +7,6 @@ import java.util.*
 
 interface AuctionJpaRepository: CrudRepository<AuctionJpaEntity, UUID> {
     fun findByCategory(category: AuctionCategoryJpaEntity): List<AuctionJpaEntity>
+    fun findByCategoryAndIsclosedIsFalse(category: AuctionCategoryJpaEntity): List<AuctionJpaEntity>
+    fun findByIsclosedFalse(): List<AuctionJpaEntity>
 }

@@ -17,9 +17,10 @@ data class AuctionJpaEntity(@Id val id: UUID,
                             val item: UUID,
                             val seller: String,
                             @Embedded
-                            val category: AuctionCategoryJpaEntity
+                            val category: AuctionCategoryJpaEntity,
+                            var isclosed: Boolean
 ) {
-    val isclosed: Boolean = false
+    // val isclosed: Boolean = false
     @ElementCollection
     val bids: MutableList<UUID> = ArrayList()
 }
