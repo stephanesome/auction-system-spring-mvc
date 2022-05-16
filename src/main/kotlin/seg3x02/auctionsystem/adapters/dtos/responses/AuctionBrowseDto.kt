@@ -11,5 +11,6 @@ class AuctionBrowseDto(val id: UUID,
                        val itemDescription: String,
                        val itemImage: ByteArray,
                        val endTime: LocalDateTime,
-                       val currentMinBid: BigDecimal) {
+                       val currentMinBid: BigDecimal,
+                       var isclosed: Boolean) {
 }

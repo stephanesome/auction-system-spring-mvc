@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.PlaceBid
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
-import seg3x02.auctionsystem.domain.item.core.Item
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.item.entities.Item
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
 import java.time.Duration
@@ -53,7 +53,8 @@ class PlaceBidImplTest {
             BigDecimal(100),
             BigDecimal(5),
             "sellerXXX",
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val itemId = UUID.randomUUID()
         Item(itemId,
@@ -88,7 +89,8 @@ class PlaceBidImplTest {
             BigDecimal(100),
             BigDecimal(5),
             "sellerYYY",
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val itemId = UUID.randomUUID()
         Item(itemId,

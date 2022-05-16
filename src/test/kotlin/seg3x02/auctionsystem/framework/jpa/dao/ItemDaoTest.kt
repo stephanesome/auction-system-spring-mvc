@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
 import seg3x02.auctionsystem.adapters.repositories.ItemJpaAdapter
-import seg3x02.auctionsystem.domain.item.core.Item
+import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.framework.jpa.entities.item.ItemJpaEntity
 import java.util.*
 

@@ -8,15 +8,15 @@ import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.EmailService
 import seg3x02.auctionsystem.application.usecases.CloseAuction
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
-import seg3x02.auctionsystem.domain.item.core.Item
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.core.creditCard.Address
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.item.entities.Item
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.creditCard.Address
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
@@ -77,7 +77,8 @@ class CloseAuctionImplTest {
             BigDecimal(100),
             BigDecimal(5),
             seller.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val itemId = UUID.randomUUID()
         Item(itemId,
@@ -149,7 +150,8 @@ class CloseAuctionImplTest {
             BigDecimal(100),
             BigDecimal(5),
             seller.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val itemId = UUID.randomUUID()
         Item(itemId,

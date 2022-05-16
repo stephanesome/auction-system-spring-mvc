@@ -12,10 +12,15 @@ class UserAccountJpaEntity(@Id val id: String,
     ) {
     var creditCardNumber: String? = null
     @ElementCollection
+    @CollectionTable(name="ACCOUNTS_AUCTIONS",
+            joinColumns= [JoinColumn(name = "ACCOUNT_ID")])
     val auctions: MutableList<UUID> = ArrayList()
     @ElementCollection
+    @CollectionTable(name="ACCOUNTS_BIDS",
+        joinColumns= [JoinColumn(name = "ACCOUNT_ID")])
     val bids: MutableList<UUID> = ArrayList()
     var active: Boolean = true
     @Embedded
     var pendingPayment: PendingPaymentJpaEntity? = null
 }
+

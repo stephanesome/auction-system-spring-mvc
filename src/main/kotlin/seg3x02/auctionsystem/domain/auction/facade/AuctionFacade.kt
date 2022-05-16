@@ -2,8 +2,7 @@ package seg3x02.auctionsystem.domain.auction.facade
 
 import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
 import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.Bid
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*

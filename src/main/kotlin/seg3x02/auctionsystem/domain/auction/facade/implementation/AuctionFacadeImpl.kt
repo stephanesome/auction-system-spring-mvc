@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
 import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.events.AuctionClosed
 import seg3x02.auctionsystem.domain.auction.events.NewAuctionAdded
 import seg3x02.auctionsystem.domain.auction.events.NewBidCreated

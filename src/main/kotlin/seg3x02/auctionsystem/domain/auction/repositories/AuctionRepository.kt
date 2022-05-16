@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.domain.auction.repositories
 
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import java.util.*
 
 interface AuctionRepository {

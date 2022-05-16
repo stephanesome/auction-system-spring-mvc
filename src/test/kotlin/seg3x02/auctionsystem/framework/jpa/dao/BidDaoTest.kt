@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
 import seg3x02.auctionsystem.adapters.repositories.BidJpaAdapter
-import seg3x02.auctionsystem.domain.auction.core.Bid
+import seg3x02.auctionsystem.domain.auction.entities.Bid
 import seg3x02.auctionsystem.framework.jpa.entities.auction.BidJpaEntity
 import java.math.BigDecimal
 import java.time.LocalDateTime

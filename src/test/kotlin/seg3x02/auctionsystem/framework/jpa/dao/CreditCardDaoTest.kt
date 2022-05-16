@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
 import seg3x02.auctionsystem.adapters.repositories.CreditCardJpaAdapter
-import seg3x02.auctionsystem.domain.user.core.creditCard.Address
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.creditCard.Address
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.framework.jpa.entities.user.creditCard.AddressJpaEntity
 import seg3x02.auctionsystem.framework.jpa.entities.user.creditCard.CreditCardJpaEntity
 import java.time.Month

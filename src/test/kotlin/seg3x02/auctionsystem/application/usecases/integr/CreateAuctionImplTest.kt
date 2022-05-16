@@ -12,8 +12,8 @@ import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.CreateAuction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.math.BigDecimal
 import java.time.Duration

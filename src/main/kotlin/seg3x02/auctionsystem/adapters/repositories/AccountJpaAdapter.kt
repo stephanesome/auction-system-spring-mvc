@@ -8,7 +8,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import seg3x02.auctionsystem.adapters.repositories.converters.AccountJpaConverter
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.framework.jpa.dao.AccountJpaRepository
 

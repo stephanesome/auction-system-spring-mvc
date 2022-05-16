@@ -9,7 +9,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import seg3x02.auctionsystem.adapters.repositories.converters.AuctionJpaConverter
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.framework.jpa.dao.AuctionJpaRepository
 import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionCategoryJpaEntity
@@ -24,7 +24,6 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
     private val converter = Mappers.getMapper(AuctionJpaConverter::class.java)
 
     @CachePut(key = "#auction.id")
-    @Transactional
     override fun save(auction: Auction): Auction {
         val auctionJpa = converter.convertToJpa(auction)
         auctionRepository.save(auctionJpa)
@@ -32,6 +31,7 @@ class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): Au
     }
 
     @Cacheable(key = "#id")
+    @Transactional
     override fun find(id: UUID): Auction? {
         val auctionJpa = auctionRepository.findByIdOrNull(id)
         return auctionJpa?.let { converter.convertToModel(it) }

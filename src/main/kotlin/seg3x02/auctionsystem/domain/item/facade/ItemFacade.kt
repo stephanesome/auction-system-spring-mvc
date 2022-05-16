@@ -1,7 +1,7 @@
 package seg3x02.auctionsystem.domain.item.facade
 
 import seg3x02.auctionsystem.adapters.dtos.queries.ItemCreateDto
-import seg3x02.auctionsystem.domain.item.core.Item
+import seg3x02.auctionsystem.domain.item.entities.Item
 import java.util.*
 
 interface ItemFacade {

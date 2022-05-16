@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.tests.fixtures
 
-import seg3x02.auctionsystem.domain.auction.core.Bid
+import seg3x02.auctionsystem.domain.auction.entities.Bid
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import java.util.*
 

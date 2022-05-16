@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
 import seg3x02.auctionsystem.adapters.repositories.AccountJpaAdapter
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.framework.jpa.entities.user.account.PendingPaymentJpaEntity
 import seg3x02.auctionsystem.framework.jpa.entities.user.account.UserAccountJpaEntity
 import java.math.BigDecimal

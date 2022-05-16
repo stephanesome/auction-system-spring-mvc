@@ -9,6 +9,5 @@ import java.util.concurrent.ScheduledFuture
 
 class AuctionSchedulerAdapterStub {
     fun scheduleClose(auctionId: UUID, closeTime: LocalDateTime) {
-
     }
 }

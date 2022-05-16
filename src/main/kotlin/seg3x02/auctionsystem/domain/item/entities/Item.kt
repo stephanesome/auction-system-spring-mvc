@@ -1,4 +1,4 @@
-package seg3x02.auctionsystem.domain.item.core
+package seg3x02.auctionsystem.domain.item.entities
 
 import java.util.*
 

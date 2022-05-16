@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.repositories.converters.BidJpaConverter
-import seg3x02.auctionsystem.domain.auction.core.Bid
+import seg3x02.auctionsystem.domain.auction.entities.Bid
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import seg3x02.auctionsystem.framework.jpa.dao.BidJpaRepository
 import java.util.*

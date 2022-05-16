@@ -5,9 +5,9 @@ import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 import seg3x02.auctionsystem.adapters.dtos.responses.AccountViewDto
 import seg3x02.auctionsystem.adapters.dtos.responses.AuctionBrowseDto
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 
 @Mapper
 abstract class AccountViewConverter {

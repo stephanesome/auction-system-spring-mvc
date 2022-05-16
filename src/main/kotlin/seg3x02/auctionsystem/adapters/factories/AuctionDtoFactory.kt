@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
 import seg3x02.auctionsystem.adapters.dtos.queries.converters.AuctionDtoConverter
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.factories.AuctionFactory
 import java.util.*
 

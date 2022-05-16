@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.repositories.converters.CreditCardJpaConverter
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.framework.jpa.dao.CreditCardJpaRepository
 

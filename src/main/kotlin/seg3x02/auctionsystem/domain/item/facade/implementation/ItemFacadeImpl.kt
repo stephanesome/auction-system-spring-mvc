@@ -2,7 +2,7 @@ package seg3x02.auctionsystem.domain.item.facade.implementation
 
 import seg3x02.auctionsystem.adapters.dtos.queries.ItemCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
-import seg3x02.auctionsystem.domain.item.core.Item
+import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.domain.item.events.NewItemAdded
 import seg3x02.auctionsystem.domain.item.facade.ItemFacade
 import seg3x02.auctionsystem.domain.item.factories.ItemFactory

@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.tests.fixtures
 
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import java.util.*
 import kotlin.collections.HashMap

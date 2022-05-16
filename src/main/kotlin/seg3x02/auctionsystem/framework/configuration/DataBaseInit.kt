@@ -3,19 +3,18 @@ package seg3x02.auctionsystem.framework.configuration
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
-import seg3x02.auctionsystem.domain.item.core.Item
+import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.core.creditCard.Address
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.creditCard.Address
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.framework.jpa.dao.UserJpaRepository
@@ -27,7 +26,7 @@ import java.time.Month
 import java.time.Year
 import java.util.*
 
-@Component
+// @Component
 class DataBaseInit(private val auctionRepository: AuctionRepository,
                    private val accountRepository: AccountRepository,
                    private val itemRepository: ItemRepository,

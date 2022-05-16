@@ -19,15 +19,17 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Service
-class AuctionService(private val browseAuctions: BrowseAuctions,
-                     private val viewAccount: ViewAccount,
-                     private val placeBid: PlaceBid,
-                     private val createAccount: CreateAccount,
-                     private val createAuction: CreateAuction,
-                     private val updateAccount: UpdateAccount,
-                     private val deactivateAccount: DeactivateAccount,
-                     private val userRepository: UserJpaRepository,
-                     private val encoder: PasswordEncoder) {
+class AuctionService(
+    private val browseAuctions: BrowseAuctions,
+    private val viewAccount: ViewAccount,
+    private val placeBid: PlaceBid,
+    private val createAccount: CreateAccount,
+    private val createAuction: CreateAuction,
+    private val updateAccount: UpdateAccount,
+    private val deactivateAccount: DeactivateAccount,
+    private val userRepository: UserJpaRepository,
+    private val encoder: PasswordEncoder
+) {
 
     private val accountConverter = Mappers.getMapper(AccountFormDtoConverter::class.java)
     private val auctionConverter = Mappers.getMapper(AuctionFormDtoConverter::class.java)
@@ -37,14 +39,14 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
     }
 
     fun createAccount(accountData: AccountForm): Boolean {
-        return if (userRepository.existsByUsername(accountData.userName!!))  {
+        return if (userRepository.existsByUsername(accountData.userName!!)) {
             false
         } else {
             val user = User(accountData.userName!!, encoder.encode(accountData.password), true)
             userRepository.save(user!!)
             // invoke create Account use
             val account = accountConverter.convertFormAccount(accountData)
-            if (accountData.number != null && accountData.number!!.isNotEmpty()) {
+            if (accountData.number != null && accountData.number!!.trim().isNotEmpty()) {
                 val address = accountConverter.convertFormAddress(accountData)
                 val cCard = accountConverter.convertFormCreditCard(accountData, address)
                 account.creditCardInfo = cCard
@@ -58,22 +60,22 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
     }
 
     fun createAuction(account: AccountViewDto, auctionData: AuctionForm): Boolean {
-        return if (account.pendingPayment > 0.0 ||
-            account.creditCardNumber == null) {
-            false
-        } else {
-            val auction = auctionConverter.convertAuction(account.userName, auctionData)
-            auction.itemInfo = auctionConverter.convertItem(auctionData)
-            auction.itemInfo.image = auctionData.itemImageFile?.bytes
-            val aucId = createAuction.addAuction(auction)
-            if (aucId != null) {
-                val brAuc = browseAuctions.getAuctionBrowse(aucId)
-                if (brAuc != null) {
-                    account.auctions.add(brAuc)
-                }
-            }
-            aucId != null
+        val auction = auctionConverter.convertAuction(account.userName, auctionData)
+        if (auctionData.number != null && auctionData.number!!.trim().isNotEmpty()) {
+            val address = auctionConverter.convertAddress(auctionData)
+            val cCard = auctionConverter.convertCreditCard(auctionData, address)
+            auction.creditCardInfo = cCard
         }
+        auction.itemInfo = auctionConverter.convertItem(auctionData)
+        auction.itemInfo.image = auctionData.itemImageFile?.bytes
+        val aucId = createAuction.addAuction(auction)
+        if (aucId != null) {
+            val brAuc = browseAuctions.getAuctionBrowse(aucId)
+            if (brAuc != null) {
+                account.auctions.add(brAuc)
+            }
+        }
+        return aucId != null
     }
 
     fun placeBid(userName: String, auctionId: UUID, amount: Double): Boolean {
@@ -91,14 +93,15 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
 
     fun updateAccount(account: AccountViewDto, accountData: AccountForm): Boolean {
         // compare account with accountData
-        val dataChange = accountDataChange(account,accountData)
-        val ccChange = accountCreditCardChange(account,accountData)
+        val dataChange = accountDataChange(account, accountData)
+        val ccChange = accountCreditCardChange(account, accountData)
         if (!dataChange && !ccChange) return true
         val accountDto = accountConverter.convertFormAccount(accountData)
         accountDto.creditCardInfo = null
         if (accountData.number != null &&
             accountData.number!!.isNotEmpty() &&
-            ccChange) {
+            ccChange
+        ) {
             val address = accountConverter.convertFormAddress(accountData)
             val cCard = accountConverter.convertFormCreditCard(accountData, address)
             accountDto.creditCardInfo = cCard
@@ -126,7 +129,7 @@ class AuctionService(private val browseAuctions: BrowseAuctions,
     }
 
     private fun accountCreditCardChange(account: AccountViewDto, accountData: AccountForm): Boolean {
-        return  account.creditCardNumber != accountData.number ||
+        return account.creditCardNumber != accountData.number ||
                 account.expirationMonth?.value != accountData.expirationMonth ||
                 account.expirationYear?.value != accountData.expirationYear ||
                 account.accountFirstname != accountData.accountFirstname ||

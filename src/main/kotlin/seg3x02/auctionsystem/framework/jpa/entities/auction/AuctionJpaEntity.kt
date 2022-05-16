@@ -20,7 +20,8 @@ data class AuctionJpaEntity(@Id val id: UUID,
                             val category: AuctionCategoryJpaEntity,
                             var isclosed: Boolean
 ) {
-    // val isclosed: Boolean = false
     @ElementCollection
+    @CollectionTable(name="AUCTIONS_BIDS",
+        joinColumns= [JoinColumn(name = "AUCTION_ID")])
     val bids: MutableList<UUID> = ArrayList()
 }

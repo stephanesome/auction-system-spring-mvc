@@ -31,15 +31,22 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mapstruct:mapstruct:1.5.0.Beta2")
+    implementation("org.junit.platform:junit-platform-suite:1.8.2")
     kapt("org.mapstruct:mapstruct-processor:1.5.0.Beta2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    runtimeOnly("mysql:mysql-connector-java")
+    // runtimeOnly("mysql:mysql-connector-java")
+    runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "mockito-core")
     }
     testImplementation("com.ninja-squad:springmockk:3.1.0")
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("io.cucumber:cucumber-java8:7.3.2")
+    testImplementation("io.cucumber:cucumber-spring:7.3.2")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.3.2")
+    // testImplementation("io.cucumber:cucumber-java8:7.3.2")
+    // testImplementation("io.cucumber:cucumber-junit:7.3.2")
 }
 
 kapt {

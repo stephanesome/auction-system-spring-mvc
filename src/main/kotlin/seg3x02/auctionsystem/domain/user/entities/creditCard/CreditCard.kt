@@ -1,4 +1,4 @@
-package seg3x02.auctionsystem.domain.user.core.creditCard
+package seg3x02.auctionsystem.domain.user.entities.creditCard
 
 import java.time.Month
 import java.time.Year

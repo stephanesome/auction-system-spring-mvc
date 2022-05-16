@@ -11,9 +11,19 @@
 <div class="container-fluid">
     <div th:replace="~{fragments/header :: header}">Header</div>
     <div th:replace="~{fragments/menu :: menu}">Menu</div>
-    <div class="container">
+    <div class="container-fluid">
+        <div class="col">
+        <div th:if="${auctions.isEmpty()}"  class="message">
+            <p th:utext="#{browse.auctions.no.auctions}">Main</p>
+        </div>
+        </div>
+        <div class="col">
         <div th:replace="~{fragments/auction-list :: auction-list(canselect='true', list=${auctions})}">Auctions</div>
+        </div>
     </div>
 </div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

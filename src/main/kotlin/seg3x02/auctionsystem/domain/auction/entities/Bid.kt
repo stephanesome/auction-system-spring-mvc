@@ -1,4 +1,4 @@
-package seg3x02.auctionsystem.domain.auction.core
+package seg3x02.auctionsystem.domain.auction.entities
 
 import java.math.BigDecimal
 import java.time.LocalDateTime

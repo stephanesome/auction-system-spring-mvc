@@ -4,8 +4,8 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import java.util.*
 
 @Mapper

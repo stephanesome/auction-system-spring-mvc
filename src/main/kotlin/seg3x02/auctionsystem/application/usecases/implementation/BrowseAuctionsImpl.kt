@@ -2,10 +2,10 @@ package seg3x02.auctionsystem.application.usecases.implementation
 
 import seg3x02.auctionsystem.adapters.dtos.responses.AuctionBrowseDto
 import seg3x02.auctionsystem.application.usecases.BrowseAuctions
-import seg3x02.auctionsystem.domain.auction.core.Auction
+import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.facade.AuctionFacade
 import seg3x02.auctionsystem.domain.item.facade.ItemFacade
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -62,8 +62,8 @@ class BrowseAuctionsImpl(private val auctionFacade: AuctionFacade,
                     aucItem.description,
                     aucItem.image,
                     auc.closeTime(),
-                    minBid
-                )
+                    minBid,
+                    auc.isclosed)
             }
         }
         return aucDto

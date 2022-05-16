@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.tests.fixtures
 
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import kotlin.collections.HashMap
 

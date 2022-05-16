@@ -4,11 +4,10 @@ import org.mapstruct.factory.Mappers
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.annotation.Primary
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.repositories.converters.ItemJpaConverter
-import seg3x02.auctionsystem.domain.item.core.Item
+import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
 import seg3x02.auctionsystem.framework.jpa.dao.ItemJpaRepository
 import java.util.*

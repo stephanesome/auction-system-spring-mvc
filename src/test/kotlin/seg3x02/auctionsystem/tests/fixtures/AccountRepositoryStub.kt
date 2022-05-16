@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.tests.fixtures
 
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import java.util.*
 

@@ -1,8 +1,8 @@
-package seg3x02.auctionsystem.domain.user.core.account
+package seg3x02.auctionsystem.domain.user.entities.account
 
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.events.UserCreditCardSet
 import java.math.BigDecimal
 import java.util.*

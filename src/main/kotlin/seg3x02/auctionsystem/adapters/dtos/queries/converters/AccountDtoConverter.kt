@@ -4,7 +4,7 @@ import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.mapstruct.Mappings
 import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import java.util.*
 
 @Mapper

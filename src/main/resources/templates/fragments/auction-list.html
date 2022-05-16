@@ -9,7 +9,9 @@
 <div class="auction-list" th:fragment="auction-list(canselect, list)">
     <form th:action="@{/auction}" method="get">
         <div class="container">
-            <div class="row border align-items-center" th:each="auction : ${list}">
+            <div class="row border align-items-center"
+                 th:each="auction : ${list}"
+                 th:classappend="${auction.isclosed ? 'bg-dark text-white' : ''}">
                 <div class="col" th:id="image-__${auction.id}__"
                      data-toggle="tooltip" data-placement="top" th:title="#{auction.list.image.tip}">
                     <div><img src="../../images/laptop" width="100pt" alt="Item Image"

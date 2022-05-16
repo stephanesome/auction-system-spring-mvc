@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.adapters.dtos.queries.converters.CreditCardDtoConverter
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.factories.CreditCardFactory
 import java.util.*
 

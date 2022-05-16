@@ -1,7 +1,6 @@
 package seg3x02.auctionsystem.framework.jpa.dao
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -10,8 +9,8 @@ import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.data.repository.findByIdOrNull
 import seg3x02.auctionsystem.adapters.repositories.AuctionJpaAdapter
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionCategoryJpaEntity
 import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionJpaEntity
 import java.math.BigDecimal
@@ -48,7 +47,8 @@ class AuctionDaoTest {
             BigDecimal(100),
             BigDecimal(5),
             sellerId,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val itemId = UUID.randomUUID()
         auction.item = itemId
@@ -74,7 +74,8 @@ class AuctionDaoTest {
             BigDecimal(5),
             UUID.randomUUID(),
             sellerId,
-            AuctionCategoryJpaEntity("Toy")
+            AuctionCategoryJpaEntity("Toy"),
+            false
         )
         auction.bids.add(UUID.randomUUID())
         auction.bids.add(UUID.randomUUID())

@@ -5,9 +5,9 @@ import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.domain.auction.events.NewAuctionBidRegistered
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
-import seg3x02.auctionsystem.domain.user.core.creditCard.CreditCard
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
+import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.events.CreditCardCreated
 import seg3x02.auctionsystem.domain.user.events.UserAccountCreated
 import seg3x02.auctionsystem.domain.user.events.UserAccountDeactivated
@@ -58,7 +58,11 @@ class UserFacadeImpl(private val accountRepository: AccountRepository,
     }
 
     override fun addAuctionToSeller(userId: String, auctionId: UUID) {
-        accountRepository.find(userId)?.auctions?.add(auctionId)
+        val user = accountRepository.find(userId)
+        if (user != null) {
+            user.auctions.add(auctionId)
+            accountRepository.save(user)
+        }
     }
 
     override fun createAccount(accountInfo: AccountCreateDto): Boolean {
@@ -133,13 +137,16 @@ class UserFacadeImpl(private val accountRepository: AccountRepository,
     }
 
     override fun addBidToAccount(userId: String, bidId: UUID) {
-        accountRepository.find(userId)?.addBid(bidId)
-        val addBidEvent = NewAuctionBidRegistered(
-            UUID.randomUUID(),
-            Date(),
-            bidId,
-            userId)
-        eventEmitter.emit(addBidEvent)
+        val user = accountRepository.find(userId)
+        if (user != null) {
+            user.addBid(bidId)
+            val addBidEvent = NewAuctionBidRegistered(
+                UUID.randomUUID(),
+                Date(),
+                bidId,
+                userId)
+            eventEmitter.emit(addBidEvent)
+        }
     }
 
     override fun getUserAuctions(userId: String): List<UUID> {

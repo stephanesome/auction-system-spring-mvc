@@ -15,12 +15,12 @@ import org.springframework.test.context.TestPropertySource
 import seg3x02.auctionsystem.application.services.EmailService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.DeactivateAccount
-import seg3x02.auctionsystem.domain.auction.core.Auction
-import seg3x02.auctionsystem.domain.auction.core.AuctionCategory
+import seg3x02.auctionsystem.domain.auction.entities.Auction
+import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
-import seg3x02.auctionsystem.domain.item.core.Item
-import seg3x02.auctionsystem.domain.user.core.account.PendingPayment
-import seg3x02.auctionsystem.domain.user.core.account.UserAccount
+import seg3x02.auctionsystem.domain.item.entities.Item
+import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
+import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
 import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
@@ -109,7 +109,8 @@ internal class DeactivateAccountImplTest {
             BigDecimal(100),
             BigDecimal(5),
             user.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val item1Id = UUID.randomUUID()
         val item1 = Item(item1Id,
@@ -151,7 +152,8 @@ internal class DeactivateAccountImplTest {
             BigDecimal(100),
             BigDecimal(5),
             user.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val item1Id = UUID.randomUUID()
         val item1 = Item(item1Id,
@@ -189,7 +191,8 @@ internal class DeactivateAccountImplTest {
             BigDecimal(100),
             BigDecimal(5),
             user.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val item1Id = UUID.randomUUID()
         val item1 = Item(item1Id,
@@ -207,7 +210,8 @@ internal class DeactivateAccountImplTest {
             BigDecimal(100),
             BigDecimal(5),
             user.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val item2Id = UUID.randomUUID()
         val item2 = Item(item2Id,
@@ -225,7 +229,8 @@ internal class DeactivateAccountImplTest {
             BigDecimal(100),
             BigDecimal(5),
             user.id,
-            AuctionCategory("Toy")
+            AuctionCategory("Toy"),
+            false
         )
         val item3Id = UUID.randomUUID()
         val item3 = Item(item3Id,
