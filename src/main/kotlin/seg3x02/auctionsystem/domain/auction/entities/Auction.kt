@@ -1,6 +1,7 @@
 package seg3x02.auctionsystem.domain.auction.entities
 
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import java.math.BigDecimal
@@ -19,28 +20,25 @@ class Auction(
     var isclosed: Boolean
 ) {
     lateinit var item: UUID
+    lateinit var fee: BigDecimal
     val bids: MutableList<UUID> = ArrayList()
 
     fun createBid(bidInfo: BidCreateDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID? {
-        return if (startTime.isBefore(LocalDateTime.now())) {
-            if (bids.isNotEmpty()) {
-                val lastBidId = bids.last()
-                val lastBid = bidRepository.find(lastBidId)
-                if (bidInfo.amount > lastBid?.amount?.plus(this.minIncrement)) {
-                    newBid(bidInfo, bidFactory, bidRepository)
-                } else {
-                    null
-                }
-            } else {
-                if (bidInfo.amount > this.startPrice) {
-                    newBid(bidInfo, bidFactory, bidRepository)
-                } else {
-                    null
-                }
-            }
+        return if (startTime.isBefore(LocalDateTime.now()) &&
+            (bidInfo.amount >= minimumBidAmount(bidRepository))) {
+            newBid(bidInfo, bidFactory, bidRepository)
         } else {
             null
         }
+    }
+
+    fun minimumBidAmount(bidRepository: BidRepository): BigDecimal {
+        if (bids.isNotEmpty()) {
+            val lastBidId = bids.last()
+            val lastBid = bidRepository.find(lastBidId)
+            if (lastBid != null) return lastBid.amount.plus(this.minIncrement)
+        }
+        return this.startPrice
     }
 
     private fun newBid(bidInfo: BidCreateDto, bidFactory: BidFactory, bidRepository: BidRepository): UUID {
@@ -52,10 +50,10 @@ class Auction(
 
     fun close(): UUID? {
         isclosed = true
-        return getLastBid()
+        return bids.lastOrNull()
     }
 
-    fun getBidSeller(bidId: UUID, bidRepository: BidRepository): String? {
+    fun getBidder(bidId: UUID, bidRepository: BidRepository): String? {
         return bidRepository.find(bidId)?.buyer
     }
 
@@ -63,7 +61,4 @@ class Auction(
         return startTime.plus(duration)
     }
 
-    fun getLastBid(): UUID? {
-        return bids.lastOrNull()
-    }
 }

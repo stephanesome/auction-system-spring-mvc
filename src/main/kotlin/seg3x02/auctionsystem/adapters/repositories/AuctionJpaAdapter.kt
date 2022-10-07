@@ -11,14 +11,13 @@ import org.springframework.transaction.annotation.Transactional
 import seg3x02.auctionsystem.adapters.repositories.converters.AuctionJpaConverter
 import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
-import seg3x02.auctionsystem.framework.jpa.dao.AuctionJpaRepository
-import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionCategoryJpaEntity
-import seg3x02.auctionsystem.framework.jpa.entities.auction.AuctionJpaEntity
+import seg3x02.auctionsystem.infrastructure.jpa.dao.AuctionJpaRepository
+import seg3x02.auctionsystem.infrastructure.jpa.entities.auction.AuctionCategoryJpaEntity
+import seg3x02.auctionsystem.infrastructure.jpa.entities.auction.AuctionJpaEntity
 import java.util.*
 import kotlin.collections.ArrayList
 
 @Component
-@Primary
 @CacheConfig(cacheNames=["auctions"])
 class AuctionJpaAdapter(private val auctionRepository: AuctionJpaRepository): AuctionRepository {
     private val converter = Mappers.getMapper(AuctionJpaConverter::class.java)

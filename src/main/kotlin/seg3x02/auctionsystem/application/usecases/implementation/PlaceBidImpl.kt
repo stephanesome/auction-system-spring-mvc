@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.application.usecases.implementation
 
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.usecases.PlaceBid
 import seg3x02.auctionsystem.domain.auction.facade.AuctionFacade
 import seg3x02.auctionsystem.domain.user.facade.UserFacade

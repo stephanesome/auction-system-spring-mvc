@@ -17,9 +17,9 @@ class CloseAuctionImpl(
     override fun closeAuction(auctionId: UUID): String? {
         val winnerId = auctionFacade.closeAuction(auctionId)
         if (winnerId != null) {
-            val amt = determineAuctionFee(auctionId)
+            val amt = auctionFacade.getAuctionFee(auctionId)
             val sellerId = auctionFacade.getAuctionSeller(auctionId)
-            if (sellerId != null) {
+            if (sellerId != null && amt != null) {
                 val sellerEmailAddress = userFacade.getUserEmailAddress(sellerId)
                 val creditCard = userFacade.getUserCreditCard(sellerId)
                 if (creditCard != null) {
@@ -56,9 +56,5 @@ class CloseAuctionImpl(
             }
         }
         return winnerId
-    }
-
-    private fun determineAuctionFee(auctionId: UUID): BigDecimal {
-        return BigDecimal(0) // for now
     }
 }

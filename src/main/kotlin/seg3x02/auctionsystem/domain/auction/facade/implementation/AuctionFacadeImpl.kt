@@ -1,8 +1,7 @@
 package seg3x02.auctionsystem.domain.auction.facade.implementation
 
-import org.springframework.beans.factory.annotation.Autowired
-import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AuctionCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.domain.auction.entities.Auction
 import seg3x02.auctionsystem.domain.auction.events.AuctionClosed
@@ -20,13 +19,9 @@ import java.util.*
 class AuctionFacadeImpl(
     private var auctionFactory: AuctionFactory,
     private var auctionRepository: AuctionRepository,
+    private var bidFactory: BidFactory,
+    private var bidRepository: BidRepository,
     private var eventEmitter: DomainEventEmitter): AuctionFacade {
-
-    @Autowired
-    private lateinit var bidFactory: BidFactory
-
-    @Autowired
-    private lateinit var bidRepository: BidRepository
 
     override fun addAuction(auctionInfo: AuctionCreateDto, aucItemId: UUID): UUID {
         val auction = auctionFactory.createAuction(auctionInfo, aucItemId)
@@ -47,7 +42,7 @@ class AuctionFacadeImpl(
                     winnerBidId)
             )
             if (winnerBidId != null) {
-                return auc.getBidSeller(winnerBidId, bidRepository)
+                return auc.getBidder(winnerBidId, bidRepository)
             }
         }
         return null
@@ -91,16 +86,29 @@ class AuctionFacadeImpl(
        return auctionRepository.findActive()
     }
 
+    override fun setAuctionFee(auctionId: UUID, fee: BigDecimal) {
+        val auction = auctionRepository.find(auctionId)
+        if (auction != null) {
+            auction.fee = fee
+        }
+    }
+
+    override fun getAuctionFee(auctionId: UUID): BigDecimal? {
+        val auction = auctionRepository.find(auctionId)
+        return auction?.fee
+    }
+
     override fun getMinimumBidAmount(auctionId: UUID): BigDecimal? {
         val auction = auctionRepository.find(auctionId)
-        val bidId = auction?.getLastBid()
+ /*       val bidId = auction?.getLastBid()
         if (bidId != null) {
             val bid = bidRepository.find(bidId)
             if (bid != null) return bid.amount + auction.minIncrement
         } else {
             return auction?.startPrice
         }
-       return null
+        return null*/
+       return auction?.minimumBidAmount(bidRepository)
     }
 
     override fun getAuction(auctionId: UUID): Auction? {

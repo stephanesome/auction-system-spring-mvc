@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.PlaceBid
 import seg3x02.auctionsystem.domain.auction.entities.Auction

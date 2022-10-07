@@ -23,7 +23,7 @@ import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
-import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
+import seg3x02.auctionsystem.tests.testStubs.EventEmitterAdapterStub
 import java.math.BigDecimal
 import java.time.Duration
 import java.time.LocalDateTime

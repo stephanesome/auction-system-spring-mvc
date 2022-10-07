@@ -35,7 +35,6 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:1.5.0.Beta2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    // runtimeOnly("mysql:mysql-connector-java")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(module = "mockito-core")
@@ -45,8 +44,6 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java8:7.3.2")
     testImplementation("io.cucumber:cucumber-spring:7.3.2")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:7.3.2")
-    // testImplementation("io.cucumber:cucumber-java8:7.3.2")
-    // testImplementation("io.cucumber:cucumber-junit:7.3.2")
 }
 
 kapt {

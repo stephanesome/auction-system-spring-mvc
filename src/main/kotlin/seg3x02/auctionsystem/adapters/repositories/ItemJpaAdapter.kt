@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.repositories.converters.ItemJpaConverter
 import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
-import seg3x02.auctionsystem.framework.jpa.dao.ItemJpaRepository
+import seg3x02.auctionsystem.infrastructure.jpa.dao.ItemJpaRepository
 import java.util.*
 
 @Component

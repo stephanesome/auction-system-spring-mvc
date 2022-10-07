@@ -3,8 +3,8 @@ package seg3x02.auctionsystem.adapters.factories
 import org.mapstruct.factory.Mappers
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
-import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.converters.CreditCardDtoConverter
+import seg3x02.auctionsystem.application.dtos.queries.CreditCardCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.converters.CreditCardDtoConverter
 import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.factories.CreditCardFactory
 import java.util.*

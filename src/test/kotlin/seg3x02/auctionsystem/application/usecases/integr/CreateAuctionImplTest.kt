@@ -4,10 +4,10 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.ItemCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AuctionCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.CreditCardCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.ItemCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.CreateAuction
@@ -46,16 +46,19 @@ class CreateAuctionImplTest {
 
         accountRepository.save(seller)
 
+        val itemInfo = ItemCreateDto("Game boy",
+            "Still wrapped in")
+
         val aucDto = AuctionCreateDto(
             LocalDateTime.now(),
             Duration.ofDays(5),
             BigDecimal(100.00),
             BigDecimal(5.00),
             sellerId,
-            "Toy")
+            "Toy",
+            itemInfo)
 
-        aucDto.itemInfo = ItemCreateDto("Game boy",
-            "Still wrapped in")
+
 
         val aucId = createAuction.addAuction(aucDto)
         Assertions.assertThat(aucId).isNotNull
@@ -78,13 +81,17 @@ class CreateAuctionImplTest {
         )
         accountRepository.save(seller)
 
+        val itemInfo = ItemCreateDto("Game boy",
+            "Still wrapped in")
+
         val aucDto = AuctionCreateDto(
             LocalDateTime.now(),
             Duration.ofDays(5),
             BigDecimal(100.00),
             BigDecimal(5.00),
             sellerId,
-            "Toy")
+            "Toy",
+            itemInfo)
         val addr = AddressCreateDto(
             "125 DeLa Rue",
             "Ottawa",
@@ -101,8 +108,7 @@ class CreateAuctionImplTest {
             addr
         )
         aucDto.creditCardInfo = ccInfo
-        aucDto.itemInfo = ItemCreateDto("Game boy",
-            "Still wrapped in")
+
 
         val aucId = createAuction.addAuction(aucDto)
         Assertions.assertThat(aucId).isNotNull
@@ -128,15 +134,18 @@ class CreateAuctionImplTest {
         )
         accountRepository.save(seller)
 
+        val itemInfo = ItemCreateDto("Game boy",
+            "Still wrapped in")
+
         val aucDto = AuctionCreateDto(
             LocalDateTime.now(),
             Duration.ofDays(5),
             BigDecimal(100.00),
             BigDecimal(5.00),
             sellerId,
-            "Toy")
-        aucDto.itemInfo = ItemCreateDto("Game boy",
-            "Still wrapped in")
+            "Toy",
+            itemInfo)
+
 
         val aucId = createAuction.addAuction(aucDto)
         Assertions.assertThat(aucId).isNull()
@@ -155,15 +164,18 @@ class CreateAuctionImplTest {
         seller.pendingPayment = null
         accountRepository.save(seller)
 
+        val itemInfo = ItemCreateDto("Game boy",
+            "Still wrapped in")
+
         val aucDto = AuctionCreateDto(
             LocalDateTime.now(),
             Duration.ofDays(5),
             BigDecimal(100.00),
             BigDecimal(5.00),
             sellerId,
-            "Toy")
-        aucDto.itemInfo = ItemCreateDto("Game boy",
-            "Still wrapped in")
+            "Toy",
+            itemInfo)
+
 
         val aucId = createAuction.addAuction(aucDto)
         Assertions.assertThat(aucId).isNull()

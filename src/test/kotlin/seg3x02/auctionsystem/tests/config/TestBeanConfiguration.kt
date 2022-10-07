@@ -2,14 +2,13 @@ package seg3x02.auctionsystem.tests.config
 
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import seg3x02.auctionsystem.application.services.AuctionScheduler
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
 import seg3x02.auctionsystem.domain.item.repositories.ItemRepository
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
-import seg3x02.auctionsystem.tests.fixtures.*
+import seg3x02.auctionsystem.tests.testStubs.*
 
 @TestConfiguration
 class TestBeanConfiguration {

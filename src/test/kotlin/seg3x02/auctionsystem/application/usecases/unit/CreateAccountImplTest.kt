@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestPropertySource
-import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AccountCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.CreateAccount
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
-import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
+import seg3x02.auctionsystem.tests.testStubs.EventEmitterAdapterStub
 import java.time.Month
 import java.time.Year
 

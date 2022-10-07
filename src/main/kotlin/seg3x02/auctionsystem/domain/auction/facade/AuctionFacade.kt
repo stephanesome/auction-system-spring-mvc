@@ -1,7 +1,7 @@
 package seg3x02.auctionsystem.domain.auction.facade
 
-import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AuctionCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.domain.auction.entities.Auction
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -18,4 +18,6 @@ interface AuctionFacade {
     fun getMinimumBidAmount(auctionId: UUID): BigDecimal?
     fun getAuction(auctionId: UUID): Auction?
     fun getAllActiveAuctions(): List<Auction>
+    fun setAuctionFee(auctionId: UUID, fee: BigDecimal)
+    fun getAuctionFee(auctionId: UUID): BigDecimal?
 }

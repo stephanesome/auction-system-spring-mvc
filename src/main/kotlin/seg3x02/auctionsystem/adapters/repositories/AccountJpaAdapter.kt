@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 import seg3x02.auctionsystem.adapters.repositories.converters.AccountJpaConverter
 import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
-import seg3x02.auctionsystem.framework.jpa.dao.AccountJpaRepository
+import seg3x02.auctionsystem.infrastructure.jpa.dao.AccountJpaRepository
 
 @Component
 @CacheConfig(cacheNames=["users"])

@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.queries.BidCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.BidCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.EmailService
 import seg3x02.auctionsystem.application.usecases.CloseAuction
@@ -13,6 +13,7 @@ import seg3x02.auctionsystem.domain.auction.entities.AuctionCategory
 import seg3x02.auctionsystem.domain.auction.factories.BidFactory
 import seg3x02.auctionsystem.domain.auction.repositories.AuctionRepository
 import seg3x02.auctionsystem.domain.auction.repositories.BidRepository
+import seg3x02.auctionsystem.domain.auction.services.AuctionFeeCalculator
 import seg3x02.auctionsystem.domain.item.entities.Item
 import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.entities.creditCard.Address
@@ -80,6 +81,7 @@ class CloseAuctionImplTest {
             AuctionCategory("Toy"),
             false
         )
+        auction.fee = BigDecimal(0)
         val itemId = UUID.randomUUID()
         Item(itemId,
                 "Toy",
@@ -153,6 +155,7 @@ class CloseAuctionImplTest {
             AuctionCategory("Toy"),
             false
         )
+        auction.fee = BigDecimal(0)
         val itemId = UUID.randomUUID()
         Item(itemId,
             "Toy",

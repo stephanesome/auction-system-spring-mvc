@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import seg3x02.auctionsystem.adapters.repositories.converters.CreditCardJpaConverter
 import seg3x02.auctionsystem.domain.user.entities.creditCard.CreditCard
 import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
-import seg3x02.auctionsystem.framework.jpa.dao.CreditCardJpaRepository
+import seg3x02.auctionsystem.infrastructure.jpa.dao.CreditCardJpaRepository
 
 @Component
 @CacheConfig(cacheNames=["creditCards"])

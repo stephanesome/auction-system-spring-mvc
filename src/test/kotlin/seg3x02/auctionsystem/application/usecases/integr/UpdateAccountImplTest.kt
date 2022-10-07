@@ -4,9 +4,9 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import seg3x02.auctionsystem.adapters.dtos.queries.AccountCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AccountCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.CreditCardCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.UpdateAccount

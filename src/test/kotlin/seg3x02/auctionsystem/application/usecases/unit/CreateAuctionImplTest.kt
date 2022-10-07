@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestPropertySource
-import seg3x02.auctionsystem.adapters.dtos.queries.AddressCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.AuctionCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.CreditCardCreateDto
-import seg3x02.auctionsystem.adapters.dtos.queries.ItemCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AddressCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.AuctionCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.CreditCardCreateDto
+import seg3x02.auctionsystem.application.dtos.queries.ItemCreateDto
 import seg3x02.auctionsystem.application.services.CreditService
 import seg3x02.auctionsystem.application.services.DomainEventEmitter
 import seg3x02.auctionsystem.application.usecases.CreateAuction
@@ -23,7 +23,7 @@ import seg3x02.auctionsystem.domain.user.entities.account.PendingPayment
 import seg3x02.auctionsystem.domain.user.entities.account.UserAccount
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 import seg3x02.auctionsystem.tests.config.TestBeanConfiguration
-import seg3x02.auctionsystem.tests.fixtures.EventEmitterAdapterStub
+import seg3x02.auctionsystem.tests.testStubs.EventEmitterAdapterStub
 import java.math.BigDecimal
 import java.time.Duration
 import java.time.LocalDateTime
@@ -57,16 +57,17 @@ class CreateAuctionImplTest {
 
                 accountRepository.save(seller)
 
+                val itemInfo = ItemCreateDto("Game boy",
+                        "Still wrapped in")
+
                 val aucDto = AuctionCreateDto(
                         LocalDateTime.now(),
                         Duration.ofDays(5),
                         BigDecimal(100.00),
                         BigDecimal(5.00),
                         sellerId,
-                        "Toy")
-
-                aucDto.itemInfo = ItemCreateDto("Game boy",
-                "Still wrapped in")
+                        "Toy",
+                        itemInfo)
 
                 createAuction.addAuction(aucDto)
 
@@ -93,12 +94,16 @@ class CreateAuctionImplTest {
                 )
                 accountRepository.save(seller)
 
+                val itemInfo = ItemCreateDto("Game boy",
+                        "Still wrapped in")
+
                 val aucDto = AuctionCreateDto(LocalDateTime.now(),
                         Duration.ofDays(5),
                         BigDecimal(100.00),
                         BigDecimal(5.00),
                         sellerId,
-                        "Toy")
+                        "Toy",
+                        itemInfo)
                 val addr = AddressCreateDto(
                         "125 DeLa Rue",
                         "Ottawa",
@@ -115,8 +120,6 @@ class CreateAuctionImplTest {
                         addr
                 )
                 aucDto.creditCardInfo = ccInfo
-                aucDto.itemInfo = ItemCreateDto("Game boy",
-                        "Still wrapped in")
 
                 every {creditService.processPayment(ccNumber,
                         ccexMonth,
@@ -153,14 +156,16 @@ class CreateAuctionImplTest {
                 )
                 accountRepository.save(seller)
 
+                val itemInfo = ItemCreateDto("Game boy",
+                        "Still wrapped in")
+
                 val aucDto = AuctionCreateDto(LocalDateTime.now(),
                         Duration.ofDays(5),
                         BigDecimal(100.00),
                         BigDecimal(5.00),
                         sellerId,
-                        "Toy")
-                aucDto.itemInfo = ItemCreateDto("Game boy",
-                        "Still wrapped in")
+                        "Toy",
+                        itemInfo)
 
                 val aucId = createAuction.addAuction(aucDto)
                 Assertions.assertThat(aucId).isNull()
@@ -179,14 +184,16 @@ class CreateAuctionImplTest {
                 seller.pendingPayment = null
                 accountRepository.save(seller)
 
+                val itemInfo = ItemCreateDto("Game boy",
+                        "Still wrapped in")
+
                 val aucDto = AuctionCreateDto(LocalDateTime.now(),
                         Duration.ofDays(5),
                         BigDecimal(100.00),
                         BigDecimal(5.00),
                         sellerId,
-                        "Toy")
-                aucDto.itemInfo = ItemCreateDto("Game boy",
-                        "Still wrapped in")
+                        "Toy",
+                        itemInfo)
 
                 val aucId = createAuction.addAuction(aucDto)
                 Assertions.assertThat(aucId).isNull()
@@ -208,12 +215,16 @@ class CreateAuctionImplTest {
                 )
                 accountRepository.save(seller)
 
+                val itemInfo = ItemCreateDto("Game boy",
+                        "Still wrapped in")
+
                 val aucDto = AuctionCreateDto(LocalDateTime.now(),
                         Duration.ofDays(5),
                         BigDecimal(100.00),
                         BigDecimal(5.00),
                         sellerId,
-                        "Toy")
+                        "Toy",
+                        itemInfo)
                 val addr = AddressCreateDto(
                         "125 DeLa Rue",
                         "Ottawa",
@@ -230,8 +241,6 @@ class CreateAuctionImplTest {
                         addr
                 )
                 aucDto.creditCardInfo = ccInfo
-                aucDto.itemInfo = ItemCreateDto("Game boy",
-                        "Still wrapped in")
 
                 every {creditService.processPayment(ccNumber,
                         ccexMonth,
