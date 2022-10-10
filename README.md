@@ -8,6 +8,12 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
      docker image build -t auction-system-app .
 ```
 
+### Create Network
+
+```
+     docker network create db-network
+```
+
 ### Postgres Database
 
 ```
