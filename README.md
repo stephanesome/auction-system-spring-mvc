@@ -2,19 +2,27 @@
 
 Implementation of the **Online Auction System** Domain Driven Design with Spring MVC.
 
-### Building docker image
+### Building with compose
+
+```
+    docker-compose up -d --build
+```
+
+### Detail build with docker
+
+#### Building docker image
 
 ```
      docker image build -t auction-system-app .
 ```
 
-### Create Network
+#### Create Network
 
 ```
      docker network create db-network
 ```
 
-### Postgres Database
+##### Postgres Database
 
 ```
     docker run -d --name postgres-db\
@@ -23,10 +31,10 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
      -e POSTGRES_USER=puser \
      -e POSTGRES_PASSWORD=pass \
      -v postgresdata:/var/lib/postgresql/data \
-     -d -p 5432:5432 postgres
+     -d -p 5432:5432 postgres:15
 ```
 
-### Launch application
+#### Launch application
 
 ```
    docker run -d --name auction-app \

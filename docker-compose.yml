@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  postgres-db:
+    image: postgres:15
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_DB: auctionsDb
+      POSTGRES_USER: puser
+      POSTGRES_PASSWORD: pass
+    networks:
+      - db-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    ports:
+      - 5432:5432
+
+  auction-system:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: auction-system-app:latest
+    environment:
+      POSTGRES_HOST: postgres-db
+      POSTGRES_DB: auctionsDb
+    networks:
+      - db-network
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+networks:
+  db-network:
+
+volumes:
+  postgresdata:
