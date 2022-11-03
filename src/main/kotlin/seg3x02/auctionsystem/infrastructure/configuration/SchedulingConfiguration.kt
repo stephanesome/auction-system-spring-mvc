@@ -9,8 +9,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 
 @Configuration
 @EnableScheduling
-// @ComponentScan()
-// @PropertySource("classpath:springScheduled.properties")
 class SchedulingConfiguration {
     @Bean
     fun taskScheduler(): TaskScheduler {
@@ -19,9 +17,4 @@ class SchedulingConfiguration {
         threadPoolTaskScheduler.setThreadNamePrefix("TaskScheduler")
         return threadPoolTaskScheduler
     }
-
-/*    @Bean
-    fun propertySourcesPlaceholderConfigurer(): PropertySourcesPlaceholderConfigurer {
-        return PropertySourcesPlaceholderConfigurer()
-    }*/
 }

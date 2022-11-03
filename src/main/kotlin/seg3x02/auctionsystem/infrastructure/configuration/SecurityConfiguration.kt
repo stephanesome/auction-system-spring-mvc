@@ -11,7 +11,6 @@ import seg3x02.auctionsystem.infrastructure.security.UserDetailsServiceImpl
 
 
 @Configuration
-// @EnableWebSecurity
 class SecurityConfiguration(private val userDetailsService: UserDetailsServiceImpl) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -38,15 +37,6 @@ class SecurityConfiguration(private val userDetailsService: UserDetailsServiceIm
             web.ignoring()
                 .antMatchers("/resources/**") }
     }
-
-/*    @Bean
-    fun userDetailsService(): InMemoryUserDetailsManager {
-        val user: UserDetails = User.withUsername("user")
-            .password(passwordEncoder()?.encode("password"))
-            .roles("USER")
-            .build()
-        return InMemoryUserDetailsManager(user)
-    }*/
 
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder? {

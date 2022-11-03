@@ -27,7 +27,6 @@ import seg3x02.auctionsystem.domain.user.repositories.CreditCardRepository
 import seg3x02.auctionsystem.domain.user.repositories.AccountRepository
 
 @Configuration
-// @ComponentScan(basePackageClasses = [AuctionSystemApplication::class])
 class BeanConfiguration() {
     @Bean
     fun createAuctionUseCase(userFacade: UserFacade,
