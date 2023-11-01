@@ -1,6 +1,6 @@
 package seg3x02.auctionsystem.infrastructure.web.forms.validators
 
-import javax.validation.Constraint
+import jakarta.validation.Constraint
 import kotlin.reflect.KClass
 
 

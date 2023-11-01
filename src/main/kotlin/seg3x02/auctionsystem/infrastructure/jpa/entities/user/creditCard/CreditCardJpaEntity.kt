@@ -2,7 +2,7 @@ package seg3x02.auctionsystem.infrastructure.jpa.entities.user.creditCard
 
 import java.time.Month
 import java.time.Year
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity()
 @Table(name="CREDIT_CARD")

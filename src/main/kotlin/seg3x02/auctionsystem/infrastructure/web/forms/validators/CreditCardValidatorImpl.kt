@@ -2,8 +2,8 @@ package seg3x02.auctionsystem.infrastructure.web.forms.validators
 
 import org.springframework.beans.BeanWrapperImpl
 import java.lang.ClassCastException
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 
 class CreditCardValidatorImpl: ConstraintValidator<CreditCardValidator, Object> {
     lateinit var numberField: String

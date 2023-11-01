@@ -3,9 +3,9 @@ package seg3x02.auctionsystem.infrastructure.jpa.entities.auction
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity()
 @Table(name="BIDS")

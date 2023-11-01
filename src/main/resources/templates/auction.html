@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
+ <!--   <meta charset="UTF-8">
     <meta content="S. Some" name="author">
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css} " th:rel="stylesheet"/>
     <link href="../static/css/style.css" rel="stylesheet"
-          th:href="@{/css/style.css}"/>
+          th:href="@{/css/style.css}"/>-->
 </head>
 <body>
+<div layout:fragment="content">
 <div class="container-fluid">
-    <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+ <!--   <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>-->
     <div class="content">
         <div class="container">
             <div class="col" th:switch="${bidResult}">
@@ -88,8 +90,9 @@
         </div>
     </div>
 </div>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+</div>
+<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 </body>
 </html>

@@ -2,7 +2,7 @@ package seg3x02.auctionsystem.infrastructure.web.forms
 
 import seg3x02.auctionsystem.infrastructure.web.forms.validators.CreditCardValidator
 import seg3x02.auctionsystem.infrastructure.web.forms.validators.PasswordMatch
-import javax.validation.constraints.*
+import jakarta.validation.constraints.*
 
 @CreditCardValidator.List(
     *[CreditCardValidator(

@@ -1,8 +1,8 @@
 package seg3x02.auctionsystem.infrastructure.security.credentials
 
-import javax.persistence.*
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 
 @Entity
 @Table(name = "users", uniqueConstraints = [UniqueConstraint(columnNames = ["username"])])

@@ -1,7 +1,7 @@
 package seg3x02.auctionsystem.infrastructure.jpa.entities.user.account
 
 import java.util.*
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity()
 @Table(name="ACCOUNTS")

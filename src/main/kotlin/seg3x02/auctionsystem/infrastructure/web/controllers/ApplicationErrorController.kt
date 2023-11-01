@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import seg3x02.auctionsystem.infrastructure.web.forms.SearchRequest
-import javax.servlet.http.HttpSession
+import jakarta.servlet.http.HttpSession
 
 @Controller
 class ApplicationErrorController: ErrorController {

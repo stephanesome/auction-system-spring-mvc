@@ -1,5 +1,5 @@
 # build application
-FROM gradle:7.1.1-jdk11 AS build
+FROM gradle:7.6.3-jdk17 AS build
 WORKDIR /workspace
 COPY . .
 RUN  ./gradlew bootJar --no-daemon

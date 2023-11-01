@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import seg3x02.auctionsystem.infrastructure.jpa.dao.UserJpaRepository
 import seg3x02.auctionsystem.infrastructure.security.credentials.User
-import javax.transaction.Transactional
+import jakarta.transaction.Transactional
 
 @Service
 class UserDetailsServiceImpl(val userRepository: UserJpaRepository): UserDetailsService {

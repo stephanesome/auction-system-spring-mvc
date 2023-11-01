@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
+<!--    <meta charset="UTF-8">
     <meta name="author" content="S. Some">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet" />
     <link href="../static/css/style.css" rel="stylesheet"
           th:href="@{/css/style.css}" />
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}" defer></script>
+    <script th:src="@{/js/app.js}" defer></script>-->
 </head>
 <body>
 <div class="container-fluid">
-    <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>
+   <!-- <div th:replace="~{fragments/header :: header}">Header</div>
+    <div th:replace="~{fragments/menu :: menu}">Menu</div>-->
+    <div layout:fragment="content">
     <div class="login">
         <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show">
             <span th:text="#{loginPage.invalid}">Login Error.</span>
@@ -30,9 +34,10 @@
             <button id="loginBtn" class="btn btn-primary" type="submit" th:text="#{loginPage.signin}"></button>
         </form>
     </div>
+    </div>
 </div>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 </body>
 </html>

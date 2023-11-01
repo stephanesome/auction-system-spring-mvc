@@ -1,8 +1,8 @@
 package seg3x02.auctionsystem.infrastructure.web.forms.validators
 
 import org.springframework.beans.BeanWrapperImpl
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 
 class PasswordMatchImpl: ConstraintValidator<PasswordMatch, Object> {
     lateinit var passwordField: String

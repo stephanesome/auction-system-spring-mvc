@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-<meta charset="UTF-8">
+<!--<meta charset="UTF-8">
 <meta name="author" content="S. Some">
-  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
-<link href="../static/css/style.css" rel="stylesheet"
+  <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet" />
+  <link href="../static/css/style.css" rel="stylesheet"
 	th:href="@{/css/style.css}" />
+  <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}" defer></script>
+  <script th:src="@{/js/app.js}" defer></script>-->
 </head>
 <body>
 <div class="container-fluid">
-  <div th:replace="~{fragments/header :: header}">Header</div>
-  <div th:replace="~{fragments/menu :: menu}">Menu</div>
-  <div class="content">
+<!--  <div th:replace="~{fragments/header :: header}">Header</div>
+  <div th:replace="~{fragments/menu :: menu}">Menu</div>-->
+
+  <div layout:fragment="content">
     <div class="message">
     <p th:utext="#{welcome.text}">Main</p>
     </div>
     <div th:replace="~{fragments/auction-list :: auction-list(canselect='true', list=${auctions})}">Auctions</div>
-    </div>
+  </div>
   </div>
 </body>
 </html>
