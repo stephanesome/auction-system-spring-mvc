@@ -1,42 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-<!--    <meta charset="UTF-8">
-    <meta name="author" content="S. Some">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
-    <link href="../static/css/style.css" rel="stylesheet"
-          th:href="@{/css/style.css}"/>-->
-</head>
 <body>
 <div layout:fragment="content">
 <div class="container-fluid">
-<!--    <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>-->
     <div class="container">
         <div class="col" th:switch="${createAuctionStatus}">
-            <div th:case="ok" class="alert alert-info alert-dismissible fade show">
+            <div th:case="ok" class="alert alert-info alert-dismissible fade show" role="alert">
                 <span th:text="#{auction-create-ok-message}">Ok</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
-            <div th:case="error" class="alert alert-danger alert-dismissible fade show">
+            <div th:case="error" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <span th:text="#{auction-create-error-message}">Error</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
-            <div th:case="cc-error" class="alert alert-danger alert-dismissible fade show">
+            <div th:case="cc-error" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <span th:text="#{error-no-cc-create-auction-message}">Error</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
-            <div th:case="pp-error" class="alert alert-danger alert-dismissible fade show">
+            <div th:case="pp-error" class="alert alert-danger alert-dismissible fade show" role="alert">
                 <span th:text="#{error-pp-create-auction-message}">Error</span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 </button>
             </div>
         </div>
@@ -44,8 +31,8 @@
             <form id="auction-form" action="#" th:object="${auctionData}"
                   th:action="@{/auth/createAuction}"
                   enctype="multipart/form-data" method="post">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
                         <label for="category" th:text="#{auction.category}"><b>Category</b></label>
                         <input id="category" class="form-control" type="text" placeholder="Enter Category of Auction"
                                name="category" th:field="*{category}"/>
@@ -53,7 +40,7 @@
                             Error
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="col-md-6">
                         <label for="auctitle" th:text="#{auction.item.title}"><b></b></label>
                         <input id="auctitle" class="form-control" type="text"
                                placeholder="Enter Title of Auctioned Item" name="auctitle" th:field="*{itemTitle}"/>
@@ -62,27 +49,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="form-group col-md-9">
+                <div class="mb-3">
+                    <div class="col-md-9">
                         <label for="description" th:text="#{auction.item.description}"><b></b></label>
                         <textarea id="description" class="form-control" rows="4" cols="60"
                                   placeholder="Enter description" name="description"
                                   th:field="*{itemDescription}"></textarea>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="col-md-3">
                         <label for="imageF" th:text="#{auction.item.image}"><b></b></label>
                         <input id="imageF" class="form-control-file" type="file" name="imageF"
                                th:field="*{itemImageFile}"/>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="row">
                     <div class="card card-group">
-                    <div class="form-group col-md-3">
+                    <div class="col-md-3">
                         <label for="start" th:text="#{auction.startTime}"><b></b></label>
                         <input id="start" class="form-control" type="datetime-local"
                                placeholder="Enter starting time date" name="start" th:field="*{startTime}"/>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="col-md-3">
                         <label for="duration" th:text="#{auction.duration}"><b></b></label>
                         <input id="duration" class="form-control" type="number" placeholder="Auction duration (Days)"
                                name="duration" th:field="*{duration}"/>
@@ -90,7 +77,7 @@
                             Error
                         </div>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="col-md-3">
                         <label for="price" th:text="#{auction.start-price}"><b></b></label>
                         <input id="price" class="form-control" type="text" placeholder="Start price" name="price"
                                th:field="*{startPrice}"/>
@@ -98,7 +85,7 @@
                             Error
                         </div>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="col-md-3">
                         <label for="priceIncr" th:text="#{auction.price-incr}"><b></b></label>
                         <input id="priceIncr" class="form-control" type="text" placeholder="Price increment"
                                name="priceIncr" th:field="*{minIncrement}"/>
@@ -121,9 +108,5 @@
     </div>
 </div>
 </div>
-
-<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 </body>
 </html>

@@ -11,7 +11,7 @@
         <form class="form-inline my-2 my-lg-0"
               id="search-category-form" action="#" th:object="${searchRequest}"
               th:action="@{/search}" method="post">
-            <div class="form-group">
+            <div class="mb-3">
                 <input id="search-cat" class="form-control mr-sm-2"
                        type="search" th:placeholder="#{menu.search.category}" th:field="*{category}"/>
             </div>
@@ -44,43 +44,5 @@
         </ul>
     </div>
 </nav>
-<!--	<div class="menu" th:fragment="menu">
-		<form id="search-category-form" action="#" th:object="${searchRequest}"
-			  th:action="@{/search}" method="post">
-			<table>
-				<tbody>
-				<tr>
-					<td th:text="#{menu.search.category}">Category :</td>
-					<td><input id="search-cat" type="text" th:field="*{category}" /></td>
-					&lt;!&ndash;					</tr>&ndash;&gt;
-					&lt;!&ndash;					<tr>&ndash;&gt;
-					<td><input id="searchBtn" type="submit" th:value="#{menu.search.submit}" />
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</form>
-		<div style="align-self: flex-end" th:unless="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-			&lt;!&ndash;			<form th:action="@{/login}" method="get">
-                            <input type="submit" th:value="#{menu.signin}"/>
-                        </form>&ndash;&gt;
-			<a href="../login.html"
-			   id="sign-up-btn" type="button"
-			   th:href="@{/register}"> Create Account</a></td>
-
-			<a href="../login.html"
-			   id="login-btn" type="button"
-			   th:href="@{/login}"> Sign In</a></td>
-		</div>
-		<div style="align-self: flex-end" sec:authorize="isAuthenticated">
-			<a href="../account.html"
-			   id="account-btn" type="button"
-			   th:href="@{/auth/account}"> View Account</a></td>
-
-			<a href="logout.html"
-			   id="logout-btn" type="button"
-			   th:href="@{/logout}"> Sign Out</a></td>
-		</div>
-	</div>-->
 </body>
 </html>

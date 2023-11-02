@@ -11,15 +11,6 @@
          th:text="#{credit-card-errors}">
         Error
     </div>
-
-<!--    <p>
-        <a data-toggle="collapse"
-           href="#ccard"
-           role="button" aria-expanded="false" aria-controls="ccard"
-           th:text="#{account-credit-card-prompt}">
-            Credit Card Information
-        </a>
-    </p>-->
     <p class="d-inline-flex gap-1">
         <a data-bs-toggle="collapse" href="#ccard" role="button" aria-expanded="false" aria-controls="ccard"
            th:text="#{account-credit-card-prompt}">
@@ -28,8 +19,8 @@
     </p>
     <div class="collapse" id="ccard">
         <div class="card card-body">
-            <div class="form-row">
-                <div class="form-group col-md-4">
+            <div class="row">
+                <div class="col-md-4">
                     <label for="ccnumb" th:text="#{account.ccard.number}"><b>Card Number</b></label>
                     <input id="ccnumb" class="form-control" type="text" placeholder="Enter Number" name="ccnumb"
                            th:field="*{number}"/>
@@ -37,7 +28,7 @@
                         Error
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4">
                     <label for="ccexpm" th:text="#{account.ccard.expmonth}"><b>Expiry Month</b></label>
                     <input id="ccexpm" class="form-control" type="number" placeholder="Expiry Month" name="ccexpm"
                            min="1" max="12"
@@ -46,7 +37,7 @@
                         Error
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4">
                     <label for="ccexpy" th:text="#{account.ccard.expyear}"><b>Expiry Year</b></label>
                     <input id="ccexpy" class="form-control" type="number" placeholder="Expiry Year" name="ccexpy"
                            min="2020" max="2050"
@@ -57,8 +48,8 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
+            <div class="row">
+                <div class="col-md-6">
                     <label for="ccfname" th:text="#{account.ccard.firstname}"><b>Holder Firstname</b></label>
                     <input id="ccfname" class="form-control" type="text" placeholder="Holder's Firstname"
                            name="ccfname"
@@ -67,7 +58,7 @@
                         Error
                     </div>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="col-md-6">
                     <label for="cclname" th:text="#{account.ccard.lastname}"><b>Holder Lastname</b></label>
                     <input id="cclname" class="form-control" type="text" placeholder="Holder's Lastname"
                            name="cclname"
@@ -78,8 +69,8 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-12">
+            <div class="row">
+                <div class="col-md-12">
                     <label for="ccstreet" th:text="#{account.ccard.address.street}"><b>Street</b></label>
                     <input id="ccstreet" class="form-control" type="text" placeholder="Street"
                            name="ccstreet" th:field="*{street}"/>
@@ -89,8 +80,8 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-4">
+            <div class="row">
+                <div class="col-md-4">
                     <label for="cccity" th:text="#{account.ccard.address.city}"><b>City</b></label>
                     <input id="cccity" class="form-control" type="text" placeholder="City" name="cccity"
                            th:field="*{city}"/>
@@ -98,7 +89,7 @@
                         Error
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4">
                     <label for="cccountry" th:text="#{account.ccard.address.country}"><b>Country</b></label>
                     <input id="cccountry" class="form-control" type="text" placeholder="Country"
                            name="cccountry"
@@ -107,7 +98,7 @@
                         Error
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="col-md-4">
                     <label for="ccpcode" th:text="#{account.ccard.address.postalcode}"><b>Postal
                         Code</b></label>
                     <input id="ccpcode" class="form-control" type="text" placeholder="Postal Code"

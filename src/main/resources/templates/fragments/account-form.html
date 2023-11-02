@@ -8,8 +8,8 @@
 <div class="account-form" th:fragment="account-form(actionUrl, actionBtn, show)">
     <form id="account-form" action="#" th:object="${accountData}"
           th:action="@{${actionUrl}}" method="post">
-        <div class="form-row">
-            <div class="form-group col-md-4">
+        <div class="row">
+            <div class="col-md-4">
                 <label th:if="${show}" for="userName" th:text="#{account.username}"><b>Username</b></label>
                 <input id="userName" class="form-control" type="text" placeholder="Enter Username"
                        name="userName"
@@ -19,7 +19,7 @@
                     Error
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="col-md-4">
                 <label th:if="${show}" for="passwd" th:text="#{account.password}"><b></b></label>
                 <input id="passwd" class="form-control" type="password" placeholder="Enter Password"
                        name="passwd"
@@ -29,7 +29,7 @@
                     Error
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="col-md-4">
                 <label th:if="${show}" for="passwdconf" th:text="#{account.password.confirm}"><b></b></label>
                 <input id="passwdconf" class="form-control" type="password" placeholder="Repeat Password"
                        name="passwdconf"
@@ -40,21 +40,21 @@
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
+        <div class="row">
+            <div class="col-md-6">
                 <label for="fname" th:text="#{account.firstname}"><b></b></label>
                 <input id="fname" class="form-control" type="text" placeholder="Enter your first name"
                        name="fname"
                        th:field="*{firstname}"/>
             </div>
-            <div class="form-group col-md-6">
+            <div class="col-md-6">
                 <label for="lname" th:text="#{account.lastname}"><b></b></label>
                 <input id="lname" class="form-control" type="text" placeholder="Enter your last name"
                        name="lname"
                        th:field="*{lastname}"/>
             </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label for="email" th:text="#{account.email}"><b></b></label>
             <input id="email" class="form-control" type="email" placeholder="Enter your Email" name="email"
                    th:field="*{email}"/>
@@ -62,23 +62,6 @@
                 Error
             </div>
         </div >
-
-<!--        <div class="alert alert-danger" role="alert"
-             th:if="${#fields.hasErrors('number') || #fields.hasErrors('expirationMonth') ||
-                    #fields.hasErrors('expirationYear') || #fields.hasErrors('accountFirstname') ||
-                    #fields.hasErrors('accountLastname') || #fields.hasErrors('street') ||
-                    #fields.hasErrors('city') || #fields.hasErrors('country') ||
-                    #fields.hasErrors('postalCode')}"
-                th:text="#{credit-card-errors}">
-            Error
-        </div>-->
-
- <!--       <div class="alert alert-danger" role="alert"
-             th:if="${ccardErrors}"
-             th:text="#{credit-card-errors}">
-            Error
-        </div>-->
-
         <div th:replace="~{fragments/credit-card-form :: credit-card-form}">Credit Card</div>
 
         <div>

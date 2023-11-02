@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-<!--    <meta charset="UTF-8">
-    <meta name="author" content="S. Some">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
-    <link href="../static/css/style.css" rel="stylesheet"
-          th:href="@{/css/style.css}"/>-->
-</head>
 <body>
 <div layout:fragment="content">
 <div class="container-fluid">
-<!--    <div th:replace="~{fragments/header :: header}">Header</div>
-    <div th:replace="~{fragments/menu :: menu}">Menu</div>-->
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -31,29 +22,23 @@
             <div class="col-md-9">
                 <div class="container-fluid">
                     <div class="row" th:if="${deactivateAccountStatus == 'error'}">
-                        <!--<p>
-                            <span>Cannot Deactivate</span>
-                        </p>-->
-                        <div class="alert alert-danger alert-dismissible fade show">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <span th:text="#{account-deactivate-error-message}">Error</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             </button>
                         </div>
                     </div>
                     <div class="row" th:if="${account.pendingPayment > 0.0}">
-                        <div class="alert alert-warning alert-dismissible fade show">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <span th:text="#{account-pending-payment-warning} + ${account.pendingPayment}">Error</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             </button>
                         </div>
                     </div>
                     <div class="row" th:unless="${account.pendingPayment > 0.0}">
-                        <div class="alert alert-info alert-dismissible fade show">
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
                             <span th:text="#{account-no-pending-payment}">Error</span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             </button>
                         </div>
                     </div>
@@ -75,8 +60,5 @@
     </div>
 </div>
 </div>
-<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 </body>
 </html>

@@ -31,7 +31,7 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
      -e POSTGRES_USER=puser \
      -e POSTGRES_PASSWORD=pass \
      -v postgresdata:/var/lib/postgresql/data \
-     -d -p 5432:5432 postgres:16
+     -p 5432:5432 postgres:16
 ```
 
 #### Launch application

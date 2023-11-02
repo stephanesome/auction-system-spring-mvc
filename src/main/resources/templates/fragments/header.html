@@ -7,11 +7,15 @@
 </head>
 <body>
 <div class="header" th:fragment="header">
-        <div><img src="../../images/laptop" width="200pt" alt="Item"
+    <div class="container text-center">
+        <div class="row align-items-start">
+        <div class="col"><img src="../../images/laptop" width="200pt" alt="Item"
                   th:src="@{/images/laptop.jpg}" /></div>
-        <div><span id="title" th:text="#{title.application}">Auction System</span></div>
-        <div><img src="../../images/toaster.jpg" width="200pt" alt="Item"
+        <div class="col"><span id="title" th:text="#{title.application}">Auction System</span></div>
+        <div class="col"><img src="../../images/toaster.jpg" width="200pt" alt="Item"
                   th:src="@{/images/toaster.jpg}" /></div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
