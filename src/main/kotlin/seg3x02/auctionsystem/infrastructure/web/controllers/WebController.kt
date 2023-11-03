@@ -87,7 +87,10 @@ class WebController(private val auctionService: AuctionService) {
     }
 
     @PostMapping(value = ["/auth/placeBid"])
-    fun placeBid(bidForm: BidForm, model: Model, session: HttpSession, principal: Principal): String {
+    fun placeBid(bidForm: BidForm, model: Model, session: HttpSession, principal: Principal?): String {
+        if (principal == null) {
+            return "login"
+        }
         val auction = session.getAttribute("selected") as AuctionBrowseDto
         model.addAttribute("auction", auction)
         if (auction.currentMinBid > BigDecimal(bidForm.amount)) {

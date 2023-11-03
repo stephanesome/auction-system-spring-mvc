@@ -55,7 +55,7 @@ kapt {
         // https://kotlinlang.org/docs/reference/kapt.html#annotation-processor-arguments
         // https://mapstruct.org/documentation/stable/reference/html/#configuration-options
         // arg("mapstruct.defaultComponentModel", "spring")
-    };
+    }
     correctErrorTypes = true
 }
 

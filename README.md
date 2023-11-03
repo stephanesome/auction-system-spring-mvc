@@ -5,7 +5,7 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
 ### Building with compose
 
 ```
-    docker-compose up -d --build
+    docker compose up -d --build
 ```
 
 ### Detail build with docker
