@@ -1,8 +1,9 @@
 # build application
-FROM gradle:7.6.3-jdk17 AS build
+FROM gradle:8.4.0-jdk17 AS build
 WORKDIR /workspace
 COPY . .
-RUN  ./gradlew bootJar --no-daemon
+RUN chmod +x gradle
+RUN gradle bootJar --no-daemon
 # extract jar
 FROM openjdk:17-alpine AS extraction
 WORKDIR workspace
