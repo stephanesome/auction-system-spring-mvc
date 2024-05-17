@@ -2,7 +2,6 @@ package seg3x02.auctionsystem.contracts.steps
 
 import io.cucumber.java8.En
 import io.cucumber.java8.Scenario
-import io.mockk.Runs
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions
@@ -28,7 +27,6 @@ import seg3x02.auctionsystem.domain.user.facade.implementation.UserFacadeImpl
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
-import java.util.concurrent.ScheduledFuture
 
 class StepsDefinition: En {
     private var accountRepository = AccountRepositoryStub()
@@ -409,36 +407,6 @@ class StepsDefinition: En {
         }
         Then("the user account is marked as inactive") {
             user?.let { Assertions.assertThat(it.active).isFalse() }
-        }
-        After { _: Scenario ->
-            seller = null
-            itemInfo = null
-            auctionInfo = null
-            creditCardInfo = null
-            newAucId = null
-            newauction = null
-            newItemId = null
-            newItem = null
-            newCCnum = null
-            newCC = null
-            buyer = null
-            auction = null
-            bidInfo = null
-            newBidId = null
-            newBid = null
-            accountInfo = null
-            newAccount = null
-            user = null
-            accountUpdateInfo = null
-            creditCardUpdateInfo = null
-            updatedCC = null
-            updatedCCnum = null
-
-            accountRepository = AccountRepositoryStub()
-            itemRepository = ItemRepositoryStub()
-            creditCardRepository = CreditCardRepositoryStub()
-            auctionRepository = AuctionRepositoryStub()
-            eventEmitter = EventEmitterStub()
         }
     }
 }
