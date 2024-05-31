@@ -26,6 +26,10 @@ services:
     environment:
       POSTGRES_HOST: postgres-db
       POSTGRES_DB: auctionsDb
+      EMAILSERV_HOST:
+      EMAILSERV_PORT:
+      EMAILSERV_USERNAME:
+      EMAILSERV_PASSWORD:
     networks:
       - db-network
     ports:

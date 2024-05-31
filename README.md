@@ -41,6 +41,10 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
     --network db-network \
     -e POSTGRES_HOST=postgres-db \
     -e POSTGRES_DB=auctionsDb \
+    -e EMAILSERV_HOST=<email_server_host>\
+    -e EMAILSERV_PORT=<email_server_port>\
+    -e EMAILSERV_USERNAME=<email_server_username>\
+    -e EMAILSERV_PASSWORD=<email_server_password>\
     -p 8080:8080 auction-system-app
 ```
 Navigate to: http://localhost:8080/

@@ -13,9 +13,10 @@ import java.util.concurrent.ScheduledFuture
 class AuctionSchedulerAdapter(private val taskScheduler: TaskScheduler,
             val closeAuction: CloseAuction): AuctionScheduler {
     override fun scheduleClose(auctionId: UUID, closeTime: LocalDateTime): ScheduledFuture<*> {
-        val closing =  Date
+        /*val closing =  Date
             .from(closeTime.atZone(ZoneId.systemDefault())
-                .toInstant())
+                .toInstant())*/
+        val closing = closeTime.atZone(ZoneId.systemDefault()).toInstant()
         return taskScheduler.schedule(
             CloseAuctionRunnableTask(auctionId),
             closing
