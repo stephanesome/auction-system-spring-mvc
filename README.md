@@ -2,27 +2,36 @@
 
 Implementation of the **Online Auction System** Domain Driven Design with Spring MVC.
 
+Use ***Docker*** to build and run the application.
+
+### Pre-requisites
+
+- You need to have ***Docker*** (and ***Docker Compose***) installed
+- You need to sign up for a mail service (eg. ***mailtrap.io***)
+
 ### Building with compose
 
+In the folder of file `docker-compose.yml`:
 ```
-    docker compose up -d --build
+    EMAILSERV_HOST=<email_server_host> EMAILSERV_PORT=<email_server_port> EMAILSERV_USERNAME=<email_server_username> EMAILSERV_PASSWORD=<email_server_password> docker compose up -d --build
 ```
+Once the application is running, navigate to: http://localhost:8080/
 
 ### Detail build with docker
-
-#### Building docker image
+In the folder of file `Dockerfile`:
+#### 1. Building docker image
 
 ```
      docker image build -t auction-system-app .
 ```
 
-#### Create Network
+#### 2. Create Network
 
 ```
      docker network create db-network
 ```
 
-##### Postgres Database
+#### 3. Start Postgres Database
 
 ```
     docker run -d --name postgres-db\
@@ -34,7 +43,7 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
      -p 5432:5432 postgres:16
 ```
 
-#### Launch application
+#### 4. Launch application
 
 ```
    docker run -d --name auction-app \
@@ -47,4 +56,4 @@ Implementation of the **Online Auction System** Domain Driven Design with Spring
     -e EMAILSERV_PASSWORD=<email_server_password>\
     -p 8080:8080 auction-system-app
 ```
-Navigate to: http://localhost:8080/
+#### 5. Navigate to: http://localhost:8080/
